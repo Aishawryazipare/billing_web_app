@@ -75,16 +75,16 @@
                         @endforeach
                     </select>
                     </div>
-                        <label for="lbl_cat_desc" class="col-sm-2 control-label">Stock<span style="color:#ff0000;">*</span></label>
+                        <label for="lbl_cat_desc" class="col-sm-2 control-label">Stock</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="cat_name" placeholder="Tax" name="item_stock" value="{{$item_data->item_stock}}" required>
+                            <input type="text" class="form-control" id="cat_name" placeholder="Tax" name="item_stock" value="{{$item_data->item_stock}}">
                         </div>
                     </div>
                          <div class="form-group">
                         
-                         <label for="lbl_cat_desc" class="col-sm-2 control-label">Bar Code<span style="color:#ff0000;">*</span></label>
+                         <label for="lbl_cat_desc" class="col-sm-2 control-label">Bar Code</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="cat_name" placeholder="Tax value" name="item_barcode" value="{{$item_data->item_barcode}}" required>
+                            <input type="text" class="form-control" id="cat_name" placeholder="Tax value" name="item_barcode" value="{{$item_data->item_barcode}}">
                         </div>
                              <label for="lbl_cat_desc" class="col-sm-2 control-label">HSN No.</label>
                         <div class="col-sm-4">
@@ -125,7 +125,7 @@
     var final_rate=(tax_value+disc_rate);
     $('#disc_rate').val(disc_rate);
     $('#tax_value').val(tax_value);
-    $('#final_rate').val(final_rate.toFixed(2));
+    $('#final_rate').val(final_rate.toFixed(0));
     
 });
 });

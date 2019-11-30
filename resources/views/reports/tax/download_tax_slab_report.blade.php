@@ -39,7 +39,7 @@
         </tr>
 </table>
 <?php 
-//exit;
+exit;
   $the_data = 'this is test text for downloading the contents.';
     $report_name = "BillWise Tax Report";
     header("Content-Type: application/xls");

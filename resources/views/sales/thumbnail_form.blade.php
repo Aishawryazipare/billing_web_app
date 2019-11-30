@@ -170,7 +170,13 @@ src: url('fake receipt.ttf')
     </div>
             </div>
             <div class="col-md-2">
-                <input type="text" name="cust_name"  class="form-control"  onkeyup="assign_name(this.value)" placeholder="Customer Name"/>
+				<input list="browsers" name="cust_name"  class="form-control"  onkeyup="assign_name(this.value)" placeholder="Customer Name">
+
+<datalist id="browsers">
+@foreach($customer_data as $data)
+  <option>{{$data->cust_name}}</option>
+  @endforeach
+</datalist>
             </div>
             <div class="col-md-2" style="width:13%;">
 <!--                <div class="form-group">
@@ -182,6 +188,7 @@ src: url('fake receipt.ttf')
     </label>
                 </div>-->
       <select class="form-control select2" style="width: 100%;" name="payment_type"  id="payment_type">
+	  <option value="">Select Payment Type</option>
       @foreach($payment_type as $d)
       <option value="{{$d->payment_type}}">{{$d->payment_type}}</option>
       @endforeach
@@ -194,6 +201,7 @@ src: url('fake receipt.ttf')
                 
              <!--<input list="point_of_contact" name="point_of_contact" class="form-control" placeholder="Point Of Sales">-->
       <select class="form-control select2" style="width: 100%;" name="point_of_contact"  id="point_of_contact">
+	   <option value="">Select Point Of Contact</option>
   @foreach($point_of_contact as $d)
       <option value="{{$d->point_of_contact}}">{{$d->point_of_contact}}</option>
       @endforeach  
@@ -779,7 +787,7 @@ else
  var i=1;
  var result_arr=[];
  var new_qty;
- function cal(x,item_id,disc,tax)
+ function cal(x,item_id,disc,tax,final_rate)
  {
      flag=0;
      
@@ -790,9 +798,9 @@ else
          total = 0;
          i = 1;
      }
-     total=parseFloat(total)+parseFloat(x);
+     total=parseFloat(total)+parseFloat(final_rate);
      result_arr.push(item_id);
-     result_arr.push(x);
+     result_arr.push(final_rate);
      $('#bill_data').val(result_arr);
      $('#bill_totalamt').val(total.toFixed(2));
      $('#total_bill').text("Total Amount: "+total);
@@ -816,7 +824,7 @@ $('.item_name').each(function() {
 if(flag==0)
 {
     qty=1;
-    rate=x;
+    rate=final_rate;
     amt=qty*rate;
     var gst=$('#gst_setting').val();
     if(gst=="Yes")
@@ -825,7 +833,7 @@ if(flag==0)
                     <td style='text-align:center;'><input type='text' value='"+i+"' class='form-control serial_no' style='width:60px;border:none;text-align:center;'></td>\n\
                     <td style='text-align:center;'><textarea name='stoppage[" + i + "][1]' class='form-control item_name print' cols='10' style='border:none;resize:none;width:200px;height:33px;background-color:#ffffff;' readonly>" + item + "</textarea></td>\n\
                     <td style='text-align:center;'><input type='text' name='stoppage[" + i + "][2]' class='form-control item_qty print' id='item_qty_" + i + "'  value='" + qty + "' style='width:50px;text-align:center;' onkeyup='table_cal("+i+",event)'/></td>\n\
-                    <td style='text-align:center;'><input type='text' name='stoppage[" + i + "][3]' class='form-control item_rate print' id='item_rate_" + i + "' value='" + rate + "' style='width:60px;text-align:center;' onkeyup='table_cal("+i+",event)'/></td>\n\
+                    <td style='text-align:center;'><input type='text' class='form-control  print'  value='" + rate + "' style='width:60px;text-align:center;' /><input style='display:none;' type='text' name='stoppage[" + i + "][3]' class='form-control item_rate print' id='item_rate_" + i + "' value='" + final_rate + "' style='width:60px;text-align:center;' onkeyup='table_cal("+i+",event)'/></td>\n\
                     <td style='text-align:center;' class='gst'><input type='text' name='stoppage[" + i + "][4]' class='form-control item_disc print' id='item_disc_" + i + "' value='" + disc + "' style='border:none;width:50px;text-align:center;background-color:#ffffff;' readonly/></td>\n\
                     <td style='text-align:center;' class='gst'><input type='text' name='stoppage[" + i + "][5]' class='form-control item_tax print' id='item_tax_" + i + "' value='" + tax + "' style='border:none;width:50px;text-align:center;background-color:#ffffff;' readonly/></td>\n\
                     <td style='text-align:center;'><input type='text' name='stoppage[" + i + "][6]' class='form-control item_amt print' id='item_amt_" + i + "' value='" + amt + "' style='border:none;width:80px;text-align:center;background-color:#ffffff;' readonly/></td>\n\

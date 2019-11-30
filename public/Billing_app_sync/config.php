@@ -1,8 +1,9 @@
 <?php
 
+
 $HostName = "localhost";
-$HostUser = "ipinguser";
-$HostPass = "iPing@321";
-$DatabaseName = "billing_app";
+$HostUser = "root";
+$HostPass = "";
+$DatabaseName = "billing_app_new";
 
 ?>

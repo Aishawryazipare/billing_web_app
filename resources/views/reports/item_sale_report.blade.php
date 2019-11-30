@@ -101,6 +101,7 @@
                             <tr>
                                 <th style="width:20px;">Sr.No</th>
                                 <th style="width:20px;">ICode</th>
+								<th>Date</th>
                                 <th>Item Name</th>
                                 <th>Item Qty</th>
                                 <th  style="width:20px;">Rate</th>
@@ -166,6 +167,7 @@ table.clear().draw();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].icode+'</td></tr>';
+				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].item_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].item_qty+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].item_rate+'</td></tr>';
@@ -207,6 +209,7 @@ table.clear().draw();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].icode+'</td></tr>';
+				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].item_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].item_qty+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].item_rate+'</td></tr>';

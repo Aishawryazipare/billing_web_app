@@ -11,10 +11,12 @@ $Secondlimit=$_POST['secondlimit'];
 $lid=$_POST['lid'];
 $cid=$_POST['cid'];
 $empid=$_POST['empid'];
+$cat_datetime=$_POST['cat_datetime'];
+
 if($lid == 'null'){
-	$sql="SELECT * FROM bil_category WHERE sync_flag=0 AND cid=$cid LIMIT $Firstlimit, $Secondlimit";
+	$sql="SELECT * FROM bil_category WHERE updated_at>='$cat_datetime' AND cid=$cid LIMIT $Firstlimit, $Secondlimit";
 }else{
-	$sql="SELECT * FROM bil_category WHERE sync_flag=0 AND cid=$cid AND lid=$lid LIMIT $Firstlimit, $Secondlimit";
+	echo $sql="SELECT * FROM bil_category WHERE updated_at>='$cat_datetime' AND cid=$cid AND lid=$lid LIMIT $Firstlimit, $Secondlimit";
 }
 $new_arr=array();
 if ($result=mysqli_query($con,$sql))
@@ -39,7 +41,6 @@ if ($result=mysqli_query($con,$sql))
   mysqli_free_result($result);
 }
 $json_arr["data"]=$new_arr;
-
 echo json_encode($json_arr);
 mysqli_close($con);
 ?>

@@ -11,10 +11,12 @@ $Secondlimit=$_POST['secondlimit'];
 $lid=$_POST['lid'];
 $cid=$_POST['cid'];
 $empid=$_POST['empid'];
+$item_datetime=$_POST['item_datetime'];
+
 if($lid == 'null'){
-	$sql="SELECT * FROM bil_additems WHERE sync_flag=0 AND cid=$cid LIMIT $Firstlimit, $Secondlimit";
+	$sql="SELECT * FROM bil_AddItems WHERE updated_at>='$item_datetime' AND cid=$cid LIMIT $Firstlimit, $Secondlimit";
 }else{
-	$sql="SELECT * FROM bil_additems WHERE sync_flag=0 AND cid=$cid AND lid=$lid LIMIT $Firstlimit, $Secondlimit";
+	$sql="SELECT * FROM bil_AddItems WHERE updated_at>='$item_datetime' AND cid=$cid AND lid=$lid LIMIT $Firstlimit, $Secondlimit";
 }
 $new_arr=array();
 if ($result=mysqli_query($con,$sql))

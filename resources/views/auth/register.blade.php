@@ -37,7 +37,7 @@ if(Auth::guard('employee')->check()){
                 <div class="box-header">
                     <h3 class="box-title"></h3>
                 </div>
-                <form class="form-horizontal" id="register_form" method="POST" action="{{ url('register') }}" aria-label="{{ __('Register') }}">
+                <form class="form-horizontal" id="form" method="POST" action="{{ url('register') }}" aria-label="{{ __('Register') }}">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">
@@ -80,7 +80,7 @@ if(Auth::guard('employee')->check()){
                         <div class="form-group">
                             <label for="company" class="col-sm-4 control-label">Mobile No</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" onkeypress="return phoneno(event)" id="mobile_no" placeholder="Mobile No" value="" name="mobile_no" required >
+                                <input type="text" class="form-control" onkeypress="return phoneno(event)" id="mobile_no" placeholder="Mobile No" value="" name="mobile_no" maxlength=10 required >
                             </div>
                         </div>
                         <div class="form-group">
@@ -106,7 +106,7 @@ if(Auth::guard('employee')->check()){
                         <?php } }?>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" id="submit" class="btn btn-success">Submit</button>
                         <a href="{{url('user-list')}}" class="btn btn-danger" >Cancel</a>
                     </div>
                 </form>
@@ -136,7 +136,33 @@ if(Auth::guard('employee')->check()){
                 $('#btnsubmit').on('click', function() {
                     $("#orderForm").valid();
                 });
-                
+                 $('#submit').on('click', function() {
+					 var mobile_no=$('#mobile_no').val();
+					 if(mobile_no.length < 10)
+					 {
+						swal({
+  position: 'top-end',
+  type: 'warning',
+  title: 'Please  Enter 10 Digit Number',
+  showConfirmButton: false,
+  timer: 1500
+}); 
+						 return false;
+					 }
+					  /*$.ajax({
+                    url: 'email-validate/' + mobile_no,
+                    type: "GET",
+                    success: function (data) {
+                        console.log(data);
+                        $("#email_validate").html(data);
+                        if (data != "") {
+                            $("#mobile_no").val("");
+                        }
+                    }
+                });*/
+			//	alert("Hello");
+				$( "#form" ).submit();
+				  });
                 $("#mobile_no").focusout(function () {
                 var email = $(this).val();
                 $.ajax({

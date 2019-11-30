@@ -11,7 +11,7 @@ $response=array();
 $j=0;
 foreach($arr as $row){
 	foreach($row as $val){
-		$sql = "UPDATE bil_addcustomer SET sync_flag=1 WHERE cust_id=".$val;
+		$sql = "UPDATE bil_Addcustomer SET sync_flag=0 WHERE cust_id=".$val;
 
 		if (mysqli_query($con, $sql)) {
 			$response[$j]="Updated";

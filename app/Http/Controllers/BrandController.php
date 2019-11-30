@@ -16,6 +16,7 @@ class BrandController extends Controller
      */
    public function __construct()
     {
+		date_default_timezone_set("Asia/Kolkata");
        $this->middleware(function ($request, $next) {
             $this->user= Auth::user();
             $this->admin = Auth::guard('admin')->user();

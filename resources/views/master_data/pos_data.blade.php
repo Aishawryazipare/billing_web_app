@@ -58,7 +58,7 @@
              <div class="col-md-6">   
    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">POS LIST</h3><a href="{{url('add_payment')}}" class="panel-title" style="margin-left: 60%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Payment</a>
+              <h3 class="box-title">POS LIST</h3><a href="{{url('add_pos')}}" class="panel-title" style="margin-left: 60%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New POS</a>
             </div>
             <!-- /.box-header -->
              <?php $x = 1; ?>

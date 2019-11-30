@@ -24,15 +24,10 @@
                     <div class="form-group">
                         <label for="lbl_type_name" class="col-sm-2 control-label">Payment Type<span style="color:#ff0000;">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="payment_type" placeholder="Payment Type" name="payment_type">
+                            <input type="text" class="form-control" id="payment_type" placeholder="Payment Type" name="payment_type" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="lbl_type_name" class="col-sm-2 control-label">Point Of Contact<span style="color:#ff0000;">*</span></label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="point_of_contact" placeholder="Point Of Contact" name="point_of_contact">
-                        </div>
-                    </div>
+                   
                 </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-success" id="btn_submit" name="btn_submit">Submit</button>

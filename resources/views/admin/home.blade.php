@@ -270,7 +270,7 @@ Highcharts.chart('container1', {
     series: [{
         name: 'Bills',
         colorByPoint: true,
-        data:<?php echo json_encode($final_pie); ?>
+        data:<?php if(isset($final_pie)) echo json_encode($final_pie); else echo ""; ?>
     }]
 });
 </script>

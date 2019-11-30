@@ -8,7 +8,7 @@
 		$mobileno=$_POST["mobile_no"];
 		$password=$_POST["password"];
 		$token=$_POST["token"];
-		$conn = mysqli_connect("localhost","ipinguser","iPing@321","billing_app");
+		$conn = mysqli_connect("localhost","root","","billing_app_new");
 		if($conn === false){
 			die("ERROR: Could not connect. " . mysqli_connect_error());
 		}

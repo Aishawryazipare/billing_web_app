@@ -14,6 +14,7 @@ class ReportController extends Controller
 {
     public function __construct()
     {
+	   date_default_timezone_set("Asia/Kolkata");
        $this->middleware('auth.basic');
        $this->middleware(function ($request, $next) {
             $this->user= Auth::user();
@@ -211,9 +212,15 @@ class ReportController extends Controller
              $result_data['bill_no']=$data->bill_no;
              $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
              if(!empty($customer_data))
+			 {
               $result_data['cust_name']=$customer_data->cust_name;
+			 }
              else
-               $result_data['cust_name']='';
+			 {
+				if($data->cust_name==NULL)
+				$data->cust_name="";
+               $result_data['cust_name']=$data->cust_name;
+			 }
             
              $result_data['bill_totalamt']=$data->bill_totalamt;
              $result_data['cash_or_credit']=$data->cash_or_credit;
@@ -234,16 +241,25 @@ class ReportController extends Controller
              {
                   $result_data['loc_name']='Own';
              }
+		//	 echo "CID=".$data->cid;
+		//	 echo "LID=".$data->lid;
+			// echo $data->emp_id;
              $user_data= \App\Employee::select('*')->where(['cid'=>$data->cid,'lid'=>$data->lid,'id'=>$data->emp_id])->first();
-             if(empty($user_data))
+			//echo "<pre/>";print_r($user_data);exit;
+             if(!empty($user_data))
              {
-                $user_data= \App\Admin::select('*')->where(['rid'=>$data->cid])->first();
-              $result_data['user']=$user_data->reg_personname;  
+               
+              $result_data['user']=$user_data->name;  
              }
             else
-            $result_data['user']=$user_data->name;  
+			{
+				 $admin_data= \App\Admin::select('*')->where(['rid'=>$data->cid])->first();
+            $result_data['user']=$admin_data->reg_personname;  
+			}
+			 $result_data['date']=$data->bill_date;  	
              array_push($result_final, $result_data);
          }
+		// exit;
          $result['amount']=round($total_amount,2);
          $result['other_data']=$result_final;
          echo json_encode($result);
@@ -599,6 +615,7 @@ class ReportController extends Controller
              }
             else
             $result_data['user']=$user_data->name;  
+		 $result_data['date']=$data->created_at;  	
             array_push($result_final,$result_data);
             $i++;
         }
@@ -1039,7 +1056,10 @@ class ReportController extends Controller
              
              $result_data['item_name']=$data->item_name;
              $item_data= \App\Item::select('*')->where(['item_name'=>$data->item_name])->first();
+			 if(!empty($item_data))
              $result_data['icode']=$item_data->item_id;
+			else
+				 $result_data['icode']="";
              $result_data['item_qty']=$data->total_qty;
              $result_data['item_rate']=$data->total_rate;
              $result_data['item_totalrate']=$data->final_rate;
@@ -1053,6 +1073,7 @@ class ReportController extends Controller
             else
             $result_data['user']=$user_data->name;  */
              $result_data['user']="";
+			 $result_data['date']="";
                $total_amount=$total_amount+$data->final_rate;
             array_push($result_final,$result_data);
            
@@ -1438,11 +1459,17 @@ class ReportController extends Controller
          {
              $total_amount = $total_amount + $data->bill_totalamt;
              $result_data['bill_no']=$data->bill_no;
-             $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
+              $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
              if(!empty($customer_data))
+			 {
               $result_data['cust_name']=$customer_data->cust_name;
+			 }
              else
-               $result_data['cust_name']='';
+			 {
+				if($data->cust_name==NULL)
+				$data->cust_name="";
+               $result_data['cust_name']=$data->cust_name;
+			 }
             
              $result_data['bill_totalamt']=$data->bill_totalamt;
              $result_data['cash_or_credit']=$data->cash_or_credit;
@@ -1470,6 +1497,7 @@ class ReportController extends Controller
              }
             else
             $result_data['user']=$user_data->name;  
+			 $result_data['date']=$data->bill_date;  	
              array_push($result_final, $result_data);
          }
          $result['amount']=round($total_amount,2);

@@ -99,6 +99,7 @@
                 <thead>
                 <tr>
                   <th style="width:50px;">Sr.No</th>
+				   <th>Date</th>
                   <th>Supplier Name</th>
                   <th>Item</th>
                   <th>Quantity</th>
@@ -145,6 +146,7 @@ $(document).ready(function () {
             var r = new Array();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
+				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].sup_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].inventoryitemid+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].inventoryitemquantity+'</td></tr>';
@@ -205,6 +207,7 @@ $(document).ready(function () {
             var r = new Array();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
+				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].sup_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].inventoryitemid+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].inventoryitemquantity+'</td></tr>';

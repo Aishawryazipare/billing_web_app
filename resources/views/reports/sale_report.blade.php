@@ -128,6 +128,7 @@
                 <thead id="header_data">
                 <tr>
                   <th style="width:20px;">No</th>
+				   <th style="width:20px;">Date</th>
                   <th style="width:20px;">Bill No</th>
                   <th style="width:auto;">Customer Name</th>
                   <th style="width:50px;">Total Amount</th>
@@ -176,6 +177,7 @@ $(document).ready(function () {
             var r = new Array();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
+				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_no+'<input type="hidden" class="bill_no" value="'+result[key].bill_no+'"/></td></tr>';
                 r[++j] ='<tr><td>'+result[key].cust_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_totalamt+'</td></tr>';
@@ -239,6 +241,7 @@ table.clear().draw();
             var r = new Array();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
+				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_no+'<input type="hidden" class="bill_no" value="'+result[key].bill_no+'"/></td></tr>';
                 r[++j] ='<tr><td>'+result[key].cust_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_totalamt+'</td></tr>';

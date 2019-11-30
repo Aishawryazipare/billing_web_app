@@ -14,6 +14,7 @@ class TaxController extends Controller
 {
     public function __construct()
     {
+	   date_default_timezone_set("Asia/Kolkata");
        $this->middleware('auth.basic');
        $this->middleware(function ($request, $next) {
             $this->user= Auth::user();
@@ -218,7 +219,7 @@ class TaxController extends Controller
              $result_data['total_discount']=$bill_detail_data->total_discount;
              $result_data['total_tax']=$bill_detail_data->total_tax;
              $result_data['total_amount']=$data->bill_totalamt;
-            
+             $result_data['date']=$data->bill_date;
              array_push($result_final, $result_data);
          }
          $result['amount']=round($total_amount,2);

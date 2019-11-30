@@ -17,6 +17,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
+	   date_default_timezone_set("Asia/Kolkata");
        $this->middleware('auth.basic');
        $this->middleware(function ($request, $next) {
             $this->user= Auth::user();

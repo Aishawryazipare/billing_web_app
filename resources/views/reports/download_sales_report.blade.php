@@ -16,7 +16,16 @@
               <?php $i=1;$total_amt=$total_cash=0;
                   foreach($bill_data as $data) {
                      // print_r($data);exit;
+					 if($data->cust_id>0)
+					 {
                       $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
+					  $customer_name=$customer_data->cust_name;
+					 }
+					 else
+					 {
+						 $customer_name=$data->cust_name;
+						 
+					 }
                       $location_data= \App\EnquiryLocation::select('*')->where(['loc_id'=>$data->lid])->first();
                       $user_data= \App\Employee::select('*')->where(['cid'=>$data->cid,'lid'=>$data->lid,'id'=>$data->emp_id])->first();
                       if(empty($user_data))
@@ -38,11 +47,7 @@
             <td style="text-align:center;">{{$i}}</td>
             <td style="text-align:center;">{{$data->bill_date}}</td>
             <td style="text-align:center;">{{$data->bill_no}}</td>
-            <?php if(!empty($customer_data)) {?>
-            <td style="text-align:center;">{{$customer_data->cust_name}}</td>
-             <?php } else { ?>
-             <td style="text-align:center;"></td>
-             <?php } ?>
+            <td style="text-align:center;">{{$customer_name}}</td>
             <td style="text-align:center;">{{$data->bill_totalamt}}</td>
             <td style="text-align:center;">{{$data->cash_or_credit}}</td>
             <td style="text-align:center;">{{@$point_of_data->point_of_contact}}</td>

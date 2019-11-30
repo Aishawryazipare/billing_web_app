@@ -14,6 +14,7 @@ class MasterController extends Controller
 {
     public function __construct()
     {
+		date_default_timezone_set("Asia/Kolkata");
        $this->middleware('auth.basic');
        $this->middleware(function ($request, $next) {
             $this->user= Auth::user();
@@ -147,14 +148,14 @@ class MasterController extends Controller
                 ->select('bil_category.*','bil_type.type_name')
                 ->leftjoin('bil_type','bil_type.type_id','=','bil_category.type_id')
                 ->where(['bil_category.is_active' => '0','bil_category.cid'=>$id])
-                ->orderBy('bil_category.cat_name', 'asc')
+               // ->orderBy('bil_category.cat_name', 'asc')
                 ->get();
         }else if(Auth::guard('web')->check()){
              $category = DB::table('bil_category')
                 ->select('bil_category.*','bil_type.type_name')
                 ->leftjoin('bil_type','bil_type.type_id','=','bil_category.type_id')
                 ->where(['bil_category.is_active' => '0'])
-                ->orderBy('bil_category.cat_name', 'asc')
+               // ->orderBy('bil_category.cat_name', 'asc')
                 ->get();
         }
         else if(Auth::guard('employee')->check()){
@@ -171,7 +172,7 @@ class MasterController extends Controller
                 ->select('bil_category.*','bil_type.type_name')
                 ->leftjoin('bil_type','bil_type.type_id','=','bil_category.type_id')
                 ->where(['bil_category.is_active' => '0','bil_category.cid'=>$cid])
-                ->orderBy('bil_category.cat_name', 'asc')
+               // ->orderBy('bil_category.cat_name', 'asc')
                 ->get();
             }
             else if($client_data->location == "multiple" && $role == 2)
@@ -181,7 +182,7 @@ class MasterController extends Controller
                 ->select('bil_category.*','bil_type.type_name')
                 ->leftjoin('bil_type','bil_type.type_id','=','bil_category.type_id')
                 ->where(['bil_category.is_active' => '0','bil_category.cid'=>$cid,'bil_category.lid'=>$lid])
-                ->orderBy('bil_category.cat_name', 'asc')
+               // ->orderBy('bil_category.cat_name', 'asc')
                 ->get();
                 }
                 else
@@ -190,7 +191,7 @@ class MasterController extends Controller
                     ->select('bil_category.*','bil_type.type_name')
                     ->leftjoin('bil_type','bil_type.type_id','=','bil_category.type_id')
                     ->where(['bil_category.is_active' => '0','bil_category.cid'=>$cid,'bil_category.lid'=>$lid,'emp_id'=>$emp_id])
-                    ->orderBy('bil_category.cat_name', 'asc')
+                    //->orderBy('bil_category.cat_name', 'asc')
                     ->get();
                 }
             }
@@ -200,7 +201,7 @@ class MasterController extends Controller
                 ->select('bil_category.*','bil_type.type_name')
                 ->leftjoin('bil_type','bil_type.type_id','=','bil_category.type_id')
                 ->where(['bil_category.is_active' => '0','bil_category.cid'=>$cid,'bil_category.lid'=>$lid])
-                ->orderBy('bil_category.cat_name', 'asc')
+               // ->orderBy('bil_category.cat_name', 'asc')
                 ->get();
             }
         }
@@ -410,9 +411,9 @@ class MasterController extends Controller
     {
         if(Auth::guard('admin')->check()){
             $id = $this->admin->rid;
-            $customer_data = \App\Customer::orderBy('cust_name', 'asc')->where(['is_active'=>'0','cid'=>$id])->get();
+            $customer_data = \App\Customer::where(['is_active'=>'0','cid'=>$id])->get();
         }else if(Auth::guard('web')->check()){
-                        $customer_data = \App\Customer::orderBy('cust_name', 'asc')->where(['is_active'=>'0'])->get();
+                        $customer_data = \App\Customer::where(['is_active'=>'0'])->get();
         }
         else if(Auth::guard('employee')->check()){
             $cid = $this->employee->cid;
@@ -423,15 +424,15 @@ class MasterController extends Controller
             $client_data = \App\Admin::select('location')->where(['rid'=>$cid])->first();
             if($client_data->location == "single" && $role == 2)
             {   
-                $customer_data = \App\Customer::orderBy('cust_name', 'asc')->where(['is_active'=>'0','cid'=>$cid])->get();
+                $customer_data = \App\Customer::where(['is_active'=>'0','cid'=>$cid])->get();
             }
             else if($client_data->location == "multiple" && $role == 2)
             {
-                $customer_data = \App\Customer::orderBy('cust_name', 'asc')->where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])->get();
+                $customer_data = \App\Customer::where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])->get();
             }
             else if($client_data->location == "multiple" && $role == 1)
             {
-                $customer_data = \App\Customer::orderBy('cust_name', 'asc')->where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])->get();
+                $customer_data = \App\Customer::where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])->get();
             }
                
             
@@ -518,7 +519,7 @@ class MasterController extends Controller
         if(Auth::guard('admin')->check())
             {
             $id = $this->admin->rid;
-            $item_data = \App\Item::orderBy('item_name', 'asc')->where(['cid'=>$id])->get();
+            $item_data = \App\Item::where(['cid'=>$id])->get();
         }
         else if(Auth::guard('web')->check()){
             $item_data = \App\Item::orderBy('item_name', 'asc')->get();
@@ -535,21 +536,20 @@ class MasterController extends Controller
             $client_data = \App\Admin::select('location')->where(['rid'=>$cid])->first();
             if($client_data->location == "single" && $role == 2)
             {   
-                $item_data = \App\Item::orderBy('item_name', 'asc')->where(['cid'=>$cid])->get();
+                $item_data = \App\Item::where(['cid'=>$cid])->get();
             }
             else if($client_data->location == "multiple" && $role == 2)
             {
 //                echo "multiple role 2";
                
-                $item_data = \App\Item::orderBy('item_name', 'asc')
-                        ->where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])
+                $item_data = \App\Item::where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])
                         ->orWhere(['emp_id'=>$sub_emp_id])
                         ->orWhere(['emp_id'=>$emp_id])
                         ->get();
             }
             else if($client_data->location == "multiple" && $role == 1)
             {
-                $item_data = \App\Item::orderBy('item_name', 'asc')->where(['cid'=>$cid,'lid'=>$lid])->get();
+                $item_data = \App\Item::where(['cid'=>$cid,'lid'=>$lid])->get();
             }
                 
         } 
@@ -820,9 +820,9 @@ class MasterController extends Controller
     {
         if(Auth::guard('admin')->check()){
             $id = $this->admin->rid;
-            $supplier_data = \App\Supplier::orderBy('sup_name', 'asc')->where(['is_active'=>'0','cid'=>$id])->get();
+            $supplier_data = \App\Supplier::where(['is_active'=>'0','cid'=>$id])->get();
         }else if(Auth::guard('web')->check()){
-            $supplier_data = \App\Supplier::orderBy('sup_name', 'asc')->where(['is_active'=>'0'])->get();
+            $supplier_data = \App\Supplier::where(['is_active'=>'0'])->get();
         }
         else if(Auth::guard('employee')->check()){
             $cid = $this->employee->cid;
@@ -833,15 +833,15 @@ class MasterController extends Controller
             $client_data = \App\Admin::select('location')->where(['rid'=>$cid])->first();
             if($client_data->location == "single" && $role == 2)
             {
-                $supplier_data = \App\Supplier::orderBy('sup_name', 'asc')->where(['is_active'=>'0','cid'=>$cid])->get();
+                $supplier_data = \App\Supplier::where(['is_active'=>'0','cid'=>$cid])->get();
             }
             else if($client_data->location == "multiple" && $role == 2)
             {
-                $supplier_data = \App\Supplier::orderBy('sup_name', 'asc')->where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])->get();
+                $supplier_data = \App\Supplier::where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])->get();
             }
             else if($client_data->location == "multiple" && $role == 1)
             {
-                $supplier_data = \App\Supplier::orderBy('sup_name', 'asc')->where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])->get();
+                $supplier_data = \App\Supplier::where(['is_active'=>'0','cid'=>$cid,'lid'=>$lid])->get();
             }
         } 
         return view('master_data.supplier_data',['supplier_data' => $supplier_data]);
@@ -899,6 +899,7 @@ class MasterController extends Controller
     {
         $type=$_GET['type'];
         $data=$_GET['data'];
+		
         if($type=="Category")
         {
 			if(Auth::guard('admin')->check()){
@@ -933,9 +934,18 @@ class MasterController extends Controller
         }
         else if($type=="Unit")
         {
-            $query = Type::where('Unit_name', $data)->first();
-            if(!empty($query))
+			if(Auth::guard('admin')->check()){
+            $id = $this->admin->rid;
+			  $query = Type::where(['Unit_name'=>$data,'cid'=>$id,'is_active' => '0'])->first();
+        }else if(Auth::guard('web')->check()){
+			$query = Type::where(['Unit_name'=>$data,'is_active' => '0'])->first();
+        }
+		   if(!empty($query))
             echo json_encode("Already Exist");
+
+           /* $query = Type::where(['cid'=>$id,'lid'=>$lid,'is_active' => '0'])->where('Unit_name', $data)->first();
+            if(!empty($query))
+            echo json_encode("Already Exist");*/
         }
     }
      public function getPOSData() {
@@ -994,6 +1004,10 @@ class MasterController extends Controller
     public function addPayment()
     {
         return view('master_data.add_payment');
+    }
+	public function addPOS()
+    {
+        return view('master_data.add_pos');
     }
     public function savePayment(Request $request)
     {

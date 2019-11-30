@@ -16,6 +16,7 @@
             <th  style="text-align:center;">Sr.No.</th>
             <th style="text-align:center;">Date</th>
             <th style="text-align:center;">Bill No</th>
+			<th style="text-align:center;">Customer Name</th>
             <th style="text-align:center;">Item</th>
             <th style="text-align:center;">Basic Amount</th>
             <th style="text-align:center;">Qty</th>
@@ -30,6 +31,16 @@
               $total_sales=0;
                   foreach($bill_data as $data)
                   {
+					   if($data->cust_id>0)
+					 {
+                      $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
+					  $customer_name=$customer_data->cust_name;
+					 }
+					 else
+					 {
+						 $customer_name=$data->cust_name;
+						 
+					 }
                       $j=1;
                       $total_amt=$total_disc_amt=$total_tax_amt=$total_dis_rate=0;
            $total_amt=$total_amt+$data->bill_totalamt;
@@ -43,6 +54,7 @@
             <td rowspan="{{$count}}" style="text-align:center;">{{$i}}</td>
             <td rowspan="{{$count}}" style="text-align:center;">{{$data->bill_date}}</td>
             <td rowspan="{{$count}}" style="text-align:center;">{{$data->bill_no}}</td>
+			 <td rowspan="{{$count}}" style="text-align:center;">{{$customer_name}}</td>
             <?php 
              foreach ($dros_out as $dross)
              {
@@ -84,6 +96,7 @@
             <td style="text-align:center;"><b>Total</b></td>
             <td></td>
             <td></td>
+			 <td></td>
             <td style="text-align:center;"></td>
             <td style="text-align:center;"></td>
             <td style="text-align:center;"></td>
@@ -99,6 +112,7 @@
                   ?>
         <tr>
             <td></td>
+			 <td></td>
             <td style="text-align:center;"><b>Total Sales</b></td>
             <td style="text-align:center;">{{$total_sales}}</td>
             <td></td><td></td><td></td><td></td>
@@ -106,6 +120,7 @@
         </tr>
         <tr>
             <td></td>
+			 <td></td>
             <td style="text-align:center;"><b>Total Bills</b></td>
             <td style="text-align:center;">{{$i}}</td>
              <td></td><td></td><td></td><td></td>
@@ -117,7 +132,7 @@
 <?php 
 //exit;
   $the_data = 'this is test text for downloading the contents.';
-    $report_name = "BillWise Tax Report";
+    $report_name = "Bill Detail Report";
     header("Content-Type: application/xls");
     header("Content-type: image/Upload");
     header("Content-Type: text/csv; charset=utf-8");

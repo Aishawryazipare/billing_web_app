@@ -10,7 +10,7 @@ include 'config.php';
  $username = $_POST['username'];
  $password = $_POST['password'];
  //echo $username."".$password;exit;
- $Sql_Query = "select * from bil_employees where mobile_no='$username' and android_password='$password'";
+ $Sql_Query = "select * from bil_employees where mobile_no='$username' and android_password='$password' and is_active=0";
  
  $result=mysqli_query($con,$Sql_Query);
  $rowcount=mysqli_num_rows($result);

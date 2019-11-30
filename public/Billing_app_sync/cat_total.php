@@ -1,5 +1,7 @@
 <?php
 require 'db_config.php';
+date_default_timezone_set('Asia/Kolkata');
+$now = new DateTime();
 
 if (mysqli_connect_errno())
 {
@@ -14,24 +16,24 @@ $limit=100;
 
 if($lid=='null'){
 	$sql_cat="SELECT COUNT(*) as total FROM bil_category WHERE sync_flag=0 AND cid=$cid";
-	$sql_unit="SELECT COUNT(*) as total FROM bil_addiunits WHERE sync_flag=0 AND cid=$cid";
-	$sql_item="SELECT COUNT(*) as total FROM bil_additems WHERE sync_flag=0 AND cid=$cid";
-	$sql_sup="SELECT COUNT(*) as total FROM bil_addsupplier WHERE sync_flag=0 AND cid=$cid";
-	$sql_cust="SELECT COUNT(*) as total FROM bil_addcustomer WHERE sync_flag=0 AND cid=$cid";
+	$sql_unit="SELECT COUNT(*) as total FROM bil_AddIUnits WHERE sync_flag=0 AND cid=$cid";
+	$sql_item="SELECT COUNT(*) as total FROM bil_AddItems WHERE sync_flag=0 AND cid=$cid";
+	$sql_sup="SELECT COUNT(*) as total FROM bil_AddSupplier WHERE sync_flag=0 AND cid=$cid";
+	$sql_cust="SELECT COUNT(*) as total FROM bil_Addcustomer WHERE sync_flag=0 AND cid=$cid";
 	$sql_purch="SELECT COUNT(*) as total FROM bil_inventory WHERE sync_flag=0 AND cid=$cid";
 }else{
 	$sql_cat="SELECT COUNT(*) as total FROM bil_category WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
-	$sql_unit="SELECT COUNT(*) as total FROM bil_addiunits WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
-	$sql_item="SELECT COUNT(*) as total FROM bil_additems WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
-	$sql_sup="SELECT COUNT(*) as total FROM bil_addsupplier WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
-	$sql_cust="SELECT COUNT(*) as total FROM bil_addcustomer WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
+	$sql_unit="SELECT COUNT(*) as total FROM bil_AddIUnits WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
+	$sql_item="SELECT COUNT(*) as total FROM bil_AddItems WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
+	$sql_sup="SELECT COUNT(*) as total FROM bil_AddSupplier WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
+	$sql_cust="SELECT COUNT(*) as total FROM bil_Addcustomer WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
 	$sql_purch="SELECT COUNT(*) as total FROM bil_inventory WHERE sync_flag=0 AND cid=$cid AND lid=$lid";
 }
+
 //category
 $newaraycat=array();
 $total=0;
 if ($result=mysqli_query($con,$sql_cat))
-
 {
 	while ($obj=mysqli_fetch_object($result))
 	{
@@ -48,9 +50,11 @@ if($total>$limit){
 	}
 	$totalcount=$divide+$mods;
 	$flagcat["count"]=$totalcount;
+	$flagcat["cat_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newaraycat,$flagcat);
 }else{
 	$flagcat["count"]=1;
+	$flagcat["cat_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newaraycat,$flagcat);
 }
 $json_arr["tbl_category"]=$newaraycat;
@@ -75,9 +79,11 @@ if($total>$limit){
 	}
 	$totalcount=$divide+$mods;
 	$flagunit["count"]=$totalcount;
+	$flagunit["unit_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newarayunit,$flagunit);
 }else{
 	$flagunit["count"]=1;
+	$flagunit["unit_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newarayunit,$flagunit);
 }
 $json_arr["tbl_unit"]=$newarayunit;
@@ -102,9 +108,11 @@ if($total>$limit){
 	}
 	$totalcount=$divide+$mods;
 	$flagitem["count"]=$totalcount;
+	$flagitem["item_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newarayitem,$flagitem);
 }else{
 	$flagitem["count"]=1;
+	$flagitem["item_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newarayitem,$flagitem);
 }
 $json_arr["tbl_item"]=$newarayitem;
@@ -129,9 +137,11 @@ if($total>$limit){
 	}
 	$totalcount=$divide+$mods;
 	$flagsupp["count"]=$totalcount;
+	$flagsupp["sup_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newaraysuppliers,$flagsupp);
 }else{
 	$flagsupp["count"]=1;
+	$flagsupp["sup_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newaraysuppliers,$flagsupp);
 }
 $json_arr["tbl_supplier"]=$newaraysuppliers;
@@ -156,9 +166,11 @@ if($total>$limit){
 	}
 	$totalcount=$divide+$mods;
 	$flagcust["count"]=$totalcount;
+	$flagcust["cust_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newaraycustomers,$flagcust);
 }else{
 	$flagcust["count"]=1;
+	$flagcust["cust_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newaraycustomers,$flagcust);
 }
 $json_arr["tbl_customer"]=$newaraycustomers;
@@ -183,9 +195,11 @@ if($total>$limit){
 	}
 	$totalcount=$divide+$mods;
 	$flagpurchase["count"]=$totalcount;
+	$flagpurchase["purc_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newaraypurchase,$flagpurchase);
 }else{
 	$flagpurchase["count"]=1;
+	$flagpurchase["purc_datetime"]=$now->format('Y-m-d H:i:s');
 	array_push($newaraypurchase,$flagpurchase);
 }
 $json_arr["tbl_inventory"]=$newaraypurchase;

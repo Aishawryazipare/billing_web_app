@@ -21,10 +21,10 @@
                 {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
-                  <label for="userName" class="col-sm-2 control-label">Company Name<span style="color:#ff0000;">*</span></label>
+                  <label for="userName" class="col-sm-2 control-label">Company Name</label>
 
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="userName" placeholder="Company Name" name="cust_CompanyName" value="{{$customer_data->cust_CompanyName}}" required>
+                      <input type="text" class="form-control" id="userName" placeholder="Company Name" name="cust_CompanyName" value="{{$customer_data->cust_CompanyName}}">
                   </div>
                    <label for="company" class="col-sm-2 control-label">Contact Person Name<span style="color:#ff0000;">*</span></label>
 
@@ -38,16 +38,16 @@
                   <div class="col-sm-4">
                     <input type="text" class="form-control number" id="contact" placeholder="Contact No" name="mobile_no" value="{{$customer_data->mobile_no}}"  maxlength="10" required>
                   </div>
-                    <label for="gst" class="col-sm-2 control-label">Email<span style="color:#ff0000;">*</span></label>
+                    <label for="gst" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-4">
-                      <input type="email" class="form-control" id="email" placeholder="Email" name="email_id" value="{{$customer_data->email_id}}"  required>
+                      <input type="email" class="form-control" id="email" placeholder="Email" name="email_id" value="{{$customer_data->email_id}}">
                   </div> 
                 </div>
                     <div class="form-group">
-                  <label for="gst" class="col-sm-2 control-label">GST No.<span style="color:#ff0000;">*</span></label>
+                  <label for="gst" class="col-sm-2 control-label">GST No.</label>
 
                   <div class="col-sm-4">
-                    <input type="text" class="form-control" id="gst" placeholder="GST No." name="cust_companyId_or_GST" value="{{$customer_data->cust_companyId_or_GST}}" required>
+                    <input type="text" class="form-control" id="gst" placeholder="GST No." name="cust_companyId_or_GST" value="{{$customer_data->cust_companyId_or_GST}}">
                   </div>
                 <label class="col-sm-2 control-label">Address</label>  
                     <div class="col-sm-4">

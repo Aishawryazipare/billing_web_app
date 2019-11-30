@@ -172,6 +172,7 @@ Route::get('delete-supplier/{sup_id}','MasterController@deleteSupplier');
 //POS method
 Route::get('payment_data','MasterController@getPOSData');
 Route::get('add_payment','MasterController@addPayment');
+Route::get('add_pos','MasterController@addPOS');
 Route::post('add_payment_type','MasterController@savePayment');
 
 Route::get('edit-contact','MasterController@editContact');
@@ -334,5 +335,16 @@ Route::post('cancel_bill','SalesController@delete_bill');
 Route::get('fetch_bill','SalesController@fetch_bill');
 
 Route::get('delete_bill_no','SalesController@delete_bill_no');
+
+//point of contact report
+Route::get('point_of_contact','PaymentController@getPointOfContact');
+Route::post('point_of_contact','PaymentController@fetchPointOfContact');
+Route::post('download_point_of_contact_report','PaymentController@downloadPointOfContact');
+
+Route::get('payment_report','PaymentController@getPayment');
+Route::post('payment_report','PaymentController@fetchPayment');
+Route::post('download_payment_report','PaymentController@downloadPayment');
+
+
 
 
