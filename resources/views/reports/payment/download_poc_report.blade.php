@@ -6,9 +6,10 @@
             <th style="text-align:center;">Sr.No.</th>
             <th style="text-align:center;">Date</th>
             <th style="text-align:center;">Bill No</th>
+	    <th style="text-align:center;">Order No.</th>
             <th style="text-align:center;">Customer Name</th>
             <th style="text-align:center;">Total Amount</th>
-            <th style="text-align:center;">Cash/Credit</th>
+            <th style="text-align:center;">Payment Method</th>
             <th style="text-align:center;">POS</th>
             <th style="text-align:center;">Transacation ID</th>
 			 <th style="text-align:center;">Transacation Status</th>
@@ -19,7 +20,7 @@
         </tr>
               <?php $i=1;$total_amt=$total_cash=0;
                   foreach($bill_data as $data) {
-                     // print_r($data);exit;
+                     //print_r($data);exit;
                       $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
                       $location_data= \App\EnquiryLocation::select('*')->where(['loc_id'=>$data->lid])->first();
                       $user_data= \App\Employee::select('*')->where(['cid'=>$data->cid,'lid'=>$data->lid,'id'=>$data->emp_id])->first();
@@ -43,6 +44,7 @@
         <tr>
             <td style="text-align:center;">{{$i}}</td>
             <td style="text-align:center;">{{$data->bill_date}}</td>
+	    <td style="text-align:center;">{{$data->bill_code}}</td>
             <td style="text-align:center;">{{$data->bill_no}}</td>
             <?php if(!empty($customer_data)) {?>
             <td style="text-align:center;">{{$customer_data->cust_name}}</td>
@@ -52,13 +54,13 @@
             <td style="text-align:center;">{{$data->bill_totalamt}}</td>
             <td style="text-align:center;">{{$data->cash_or_credit}}</td>
             <td style="text-align:center;">{{@$point_of_data->point_of_contact}}</td>
-			<?php  foreach($payment_details as $p) { ?>
+			<?php  if(!empty($payment_details)) {foreach($payment_details as $p) { ?>
 			<td style="text-align:center;">{{$p->t_id}}</td>
 			<td style="text-align:center;">{{$p->t_status}}</td>
 			<td style="text-align:center;">{{$p->t_details}}</td>
-			<?php } foreach($order_details as $o) { ?>
+			<?php } }if(!empty($order_details)){foreach($order_details as $o) { ?>
 			<td style="text-align:center;">{{$o->o_details}}</td>
-			<?php } ?>
+			<?php } }?>
             <td style="text-align:center;">{{$data->loc_name}}</td>
             <td style="text-align:center;">{{$user_data->name}}</td>
             
@@ -70,7 +72,7 @@
             <td style="text-align:center;">Total</td>
             <td></td>
             <td></td>
-            <td></td>
+            <td></td><td></td>
             <td style="text-align:center;">{{$total_amt}}</td>
             <td style="text-align:center;">{{$total_cash}}</td>
             <td></td>

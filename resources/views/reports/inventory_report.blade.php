@@ -104,6 +104,7 @@
                   <th>Item</th>
                   <th>Quantity</th>
                   <th>Status</th>
+		 <th>Remaining Quanity</th>
                   <th>Location</th>
                   <th>User</th>
                 </tr>
@@ -151,6 +152,7 @@ $(document).ready(function () {
                 r[++j] ='<tr><td>'+result[key].inventoryitemid+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].inventoryitemquantity+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].inventorystatus+'</td></tr>';
+		r[++j] ='<tr><td>'+result[key].stock+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].loc_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].user+'</td></tr>';
                 rowNode = table.row.add(r);
@@ -212,6 +214,7 @@ $(document).ready(function () {
                 r[++j] ='<tr><td>'+result[key].inventoryitemid+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].inventoryitemquantity+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].inventorystatus+'</td></tr>';
+		r[++j] ='<tr><td>'+result[key].stock+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].loc_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].user+'</td></tr>';
                 rowNode = table.row.add(r);

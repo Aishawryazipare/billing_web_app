@@ -10,6 +10,6 @@ class PointOfContact extends Model
     public $table = "bil_point_of_contact";
     public $timestamps=true;
     protected $fillable = [
-        'point_of_contact','is_active','cid','lid','emp_id','sync_flag'
+        'point_of_contact','counter_sell','is_active','cid','lid','emp_id','sync_flag'
     ];
 }

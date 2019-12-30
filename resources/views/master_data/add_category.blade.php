@@ -63,7 +63,8 @@
   title: 'Already Exist',
   showConfirmButton: false,
   timer: 1500
-}); 
+});
+location.reload(true); 
                             }
                         }
                     });

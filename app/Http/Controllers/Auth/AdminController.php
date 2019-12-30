@@ -111,7 +111,7 @@ class AdminController extends Controller
         if (auth()->guard('admin')->attempt(['reg_mobileno' => $request->reg_mobileno, 'password' => $request->password , 'activate_flag' => 1], $request->get('remember'))) {
             return redirect('home-admin');
         }
-        return back()->withErrors(['email' => 'Mobile or password are wrong or your accoount is not activate.']);
+        return back()->withErrors(['email' => 'Mobile or password are wrong or your accoount is not active.']);
     }
     
     public function logout(Request $request)

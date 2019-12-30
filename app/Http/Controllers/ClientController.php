@@ -40,6 +40,7 @@ class ClientController extends Controller
         $data = \App\Admin::findorfail($id);
 //        echo "<pre>";print_r($data);exit;
         $requestdata['activate_flag'] = $val;
+        $requestdata['activate_date'] = date("Y-m-d");
         $data->update($requestdata);
     }
 }

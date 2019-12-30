@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Edit Item')
 @section('content')
 <section class="content-header">
     <h1>
@@ -53,7 +54,7 @@
                     <div class="form-group">
                         <label for="lbl_cat_desc" class="col-sm-2 control-label">Final Rate</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="final_rate" placeholder="Final Rate" name="item_final_rate" value="{{$item_data->item_final_rate}}" readonly required>
+                            <input type="text" class="form-control final_rate" id="final_rate" placeholder="Final Rate" name="item_final_rate" value="{{$item_data->item_final_rate}}"  readonly required>
                         </div>
                          <label for="lbl_cat_desc" class="col-sm-2 control-label">Unit</label>
                         <div class="col-sm-4">
@@ -77,18 +78,18 @@
                     </div>
                         <label for="lbl_cat_desc" class="col-sm-2 control-label">Stock</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="cat_name" placeholder="Tax" name="item_stock" value="{{$item_data->item_stock}}">
+                            <input type="text" class="form-control" id="cat_name" placeholder="Stock" name="item_stock" value="{{$item_data->item_stock}}">
                         </div>
                     </div>
                          <div class="form-group">
                         
                          <label for="lbl_cat_desc" class="col-sm-2 control-label">Bar Code</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="cat_name" placeholder="Tax value" name="item_barcode" value="{{$item_data->item_barcode}}">
+                            <input type="text" class="form-control" id="cat_name" placeholder="Bar Code" name="item_barcode" value="{{$item_data->item_barcode}}">
                         </div>
                              <label for="lbl_cat_desc" class="col-sm-2 control-label">HSN No.</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="cat_name" placeholder="Tax value" name="item_hsncode" value="{{$item_data->item_hsncode}}">
+                            <input type="text" class="form-control" id="cat_name" placeholder="HSN No." name="item_hsncode" value="{{$item_data->item_hsncode}}">
                         </div>
 <!--                         <label for="lbl_cat_image" class="col-sm-2 control-label">Image</label>
                         <div class="col-sm-4">
@@ -101,7 +102,7 @@
                   
                 </div>
               <div class="box-footer">
-                <button type="submit" class="btn btn-success" id="btn_submit" name="btn_submit">Submit</button>
+                <button type="submit" class="btn btn-success" id="btn_submit" name="btn_submit">Update</button>
                 <a href="{{url('item_data')}}" class="btn btn-danger" >Cancel</a>
               </div>
             </form>
@@ -119,13 +120,15 @@
     var rate=$('#rate').val();
     var disc=$('#disc').val();
     var tax=$('#tax').val();
+//    alert(tax);
     var disc_r=(rate*disc)/100;
     var disc_rate=rate-disc_r
     var tax_value=(tax*disc_rate)/100;
     var final_rate=(tax_value+disc_rate);
-    $('#disc_rate').val(disc_rate);
-    $('#tax_value').val(tax_value);
-    $('#final_rate').val(final_rate.toFixed(0));
+  //  alert(final_rate);
+    $('#disc_rate').val(disc_rate.toFixed(2));
+    $('#tax_value').val(tax_value.toFixed(2));
+    $('.final_rate').val(final_rate.toFixed(2));
     
 });
 });

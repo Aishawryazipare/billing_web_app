@@ -7,7 +7,7 @@ use App\EnquiryLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use DateTime;
 class HomeController extends Controller
 {
     /**
@@ -32,7 +32,7 @@ class HomeController extends Controller
           $final_pie=array();
         $date = date('Y-m-d');
           $from_date = date($date . ' 00:00:00', time());
-         $to_date   = date($date . ' 22:00:40', time());
+         $to_date   = date($date . ' 23:59:59', time());
         if(Auth::guard('admin')->check()){
             $id = $this->admin->rid;
             $location = $this->admin->location;
@@ -60,6 +60,7 @@ class HomeController extends Controller
                      ->select('bil_location.loc_name')
                      ->where('bil_AddBillDetail.cid', '=', $id)
                      ->selectRaw('count(DISTINCT(bil_AddBillDetail.bill_no)) as orders')
+                     ->selectRaw('SUM(bil_AddBillDetail.item_totalrate) as total')
                      ->groupby('bil_location.loc_name')
                      ->orderby('orders','desc')
                      ->get();
@@ -129,6 +130,22 @@ class HomeController extends Controller
                      ->orderby('orders','desc')
                      ->limit(4)
                      ->get();
+		 $process_defect1=array();
+                    $sales_item_data = DB::table('bil_AddBillDetail')
+                     ->select('bil_AddBillDetail.item_name')
+                     ->where('bil_AddBillDetail.cid', '=', $id)
+                     ->selectRaw('sum(bil_AddBillDetail.item_qty) as qty')
+                     ->whereBetween('created_at_TIMESTAMP', [$from_date, $to_date])
+                     ->groupby('bil_AddBillDetail.item_name')
+                     ->get();
+                    //echo "<pre/>";print_r($item_data);exit;
+                    foreach($sales_item_data as $data)
+                    {
+                        $item_data = \App\Item::select('*')->where(['item_name'=>$data->item_name,'cid'=>$id,'is_active'=>0])->first(); 
+                         $process_defect1['name'][] = $data->item_name;
+                         $process_defect1['data'][] = $data->qty;
+                         $process_defect1['data1'][] = $item_data->item_stock;
+                    }
                 
                 //today 
                 $today_active_items=Item::where(['item_date'=>$date,'cid'=>$id,'is_active'=>0])->count();
@@ -136,7 +153,7 @@ class HomeController extends Controller
                 $today_total_sales= \App\BillMaster::where('cid', '=', $id)->whereBetween('created_at_TIMESTAMP', [$from_date, $to_date])->count();
                 $today_total_sales_amount= BillDetail::where('cid', '=', $id)->whereBetween('created_at_TIMESTAMP', [$from_date, $to_date])->sum('item_totalrate');
                 return view('admin.home-single',['active_items'=>$active_items,'inactive_items'=>$inactive_items,'total_sales'=>$total_sales,'top_items'=>$top_items,'total_loc'=>$total_loc,'total_sales_amount'=>$total_sales_amount
-                        ,'today_active_items'=>$today_active_items,'today_inactive_items'=>$today_inactive_items,'today_total_sales'=>$today_total_sales,'today_total_sales_amount'=>$today_total_sales_amount]);
+                        ,'today_active_items'=>$today_active_items,'today_inactive_items'=>$today_inactive_items,'today_total_sales'=>$today_total_sales,'today_total_sales_amount'=>$today_total_sales_amount,'process_defect1'=>$process_defect1]);
 //                return view('admin.home-single');
             }
             
@@ -154,7 +171,7 @@ class HomeController extends Controller
     public function empIndex(){
         $date = date('Y-m-d');
           $from_date = date($date . ' 00:00:00', time());
-         $to_date   = date($date . ' 22:00:40', time());
+         $to_date   = date($date . ' 23:59:00', time());
         if(Auth::guard('employee')->check()){
             $cid = $this->employee->cid;
             $lid = $this->employee->lid;
@@ -266,7 +283,8 @@ class HomeController extends Controller
 	  public function send()
     {
         $msg=$_GET['data'];
-        $conn = mysqli_connect("localhost","root","","billing_app_new");
+	//echo $msg;exit;
+        $conn = mysqli_connect("localhost","root","","new-dump");
 		 if(Auth::guard('admin')->check()){
             $id = $this->admin->rid;
             $location = $this->admin->location;
@@ -280,13 +298,14 @@ class HomeController extends Controller
 				//$tokens = array($row["token"]);
 				$tokens = array($row["token"]);
 				$message = array("message" => "Please Sync Data For ".$msg);
+				//echo $message;exit;
 				$this->send_notification($tokens,$message);
 			}
 		}
 		mysqli_close($conn);
     }
     	public function send_notification($tokens,$message){
-         $url = 'https://fcm.googleapis.com/fcm/send';
+        $url = 'https://fcm.googleapis.com/fcm/send';
          $arr=array(1,2,3,4,5,6,7);
 //         print_r($arr);
 //         exit;
@@ -301,7 +320,7 @@ class HomeController extends Controller
 		//print_r($fields);
 		
 		$headers = array(
-			'Authorization:key=AIzaSyBp5aiE8C_KWuSoXsh6z4lX5OpisTcnc_Q',
+			'Authorization:key=AIzaSyAu4VNOaIPP7m_7L4ZKeIer3uk4jY08Seg',
 			'Content-Type:application/json'
 			);
 	   $ch = curl_init();
@@ -312,15 +331,52 @@ class HomeController extends Controller
        curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);  
        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-       $result = curl_exec($ch);           
+       $result = curl_exec($ch);  
+       //echo $result;exit;         
        if ($result === FALSE) {
+	   echo "Failed";
            die('Curl failed: ' . curl_error($ch));
        }
        curl_close($ch);print_r($result);
 //       exit;
        return $result;
     } 
-    
+    public function check_expiry()
+    {
+        if(Auth::guard('admin')->check()){
+            $id = $this->admin->rid;
+
+        $activate_data= \App\Admin::select('*')->where(['is_active'=>0,'activate_flag'=>1,'rid'=>$id])->get();
+         foreach($activate_data as $d)
+        {
+             $active_date=$d->activate_date;
+             $date=date("Y-m-d");
+             if($active_date!=NULL)
+             {
+             
+             $start_date = $active_date;
+             $end_date = $date; 
+             //$diff=date_diff($end_date,$start_date);
+             
+             $datetime1 = new DateTime($start_date);
+             $datetime2 = new DateTime($end_date);
+            $interval = $datetime1->diff($datetime2);
+            $diff = $interval->format('%d');
+             if($diff>=365)
+             {
+                 $user_data= \App\Admin::where(['rid'=>$d->rid])->update(['activate_flag'=>'0']);
+                 $employee_data= \App\Employee::where(['cid'=>$d->rid])->update(['is_active'=>'1']);
+                 echo json_encode("updated");
+             }
+            else {
+                echo json_encode("not");
+            }
+             }
+
+
+        }
+        }
+    }
     
 
     

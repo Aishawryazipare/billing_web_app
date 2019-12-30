@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Add User')
 @section('content')
 <style>
     .invalid-feedback{
@@ -22,7 +22,7 @@ if(Auth::guard('employee')->check()){
 ?>
 <section class="content-header">
     <h1>
-        User Register
+        Add User
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{url('user_mgt')}}"><i class="fa fa-dashboard"></i>Users</a></li>
@@ -86,7 +86,7 @@ if(Auth::guard('employee')->check()){
                         <div class="form-group">
                             <label for="company" class="col-sm-4 control-label">Address</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="address" placeholder="Address" value="" name="address" required >
+                                <input type="text" class="form-control" id="address" placeholder="Address" value="" name="address" style='resize: vertical; max-width: 600px; min-width: 200px;' required >
                             </div>
                         </div>
                         <?php if($location == "multiple") { 
@@ -137,6 +137,7 @@ if(Auth::guard('employee')->check()){
                     $("#orderForm").valid();
                 });
                  $('#submit').on('click', function() {
+                     $("#form").valid();
 					 var mobile_no=$('#mobile_no').val();
 					 if(mobile_no.length < 10)
 					 {

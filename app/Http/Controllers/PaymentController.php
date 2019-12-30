@@ -51,7 +51,7 @@ class PaymentController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
               $cid = $this->admin->rid;
@@ -209,6 +209,9 @@ class PaymentController extends Controller
          foreach($bill_data as $data)
          {
              $total_amount = $total_amount + $data->bill_totalamt;
+	      if($data->bill_code==NULL)
+	      $data->bill_code="";
+	     $result_data['order_no']=$data->bill_code;
              $result_data['bill_no']=$data->bill_no;
              $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
              if(!empty($customer_data))
@@ -281,7 +284,7 @@ class PaymentController extends Controller
           $to_date = $from_date;
         
           $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
                $cid = $this->admin->rid;
@@ -416,6 +419,7 @@ class PaymentController extends Controller
                                      ->get();
              }
           }
+	//echo "<pre/>";print_r($bill_data);exit;
          return view('reports.payment.download_poc_report',['bill_data'=>$bill_data]);
     }
   public function getPayment()
@@ -445,7 +449,7 @@ class PaymentController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
               $cid = $this->admin->rid;
@@ -603,6 +607,9 @@ class PaymentController extends Controller
          foreach($bill_data as $data)
          {
              $total_amount = $total_amount + $data->bill_totalamt;
+	     if($data->bill_code==NULL)
+	     $data->bill_code="";
+	      $result_data['order_no']=$data->bill_code;
              $result_data['bill_no']=$data->bill_no;
              $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
              if(!empty($customer_data))
@@ -656,7 +663,7 @@ class PaymentController extends Controller
           $to_date = $from_date;
         
           $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
                $cid = $this->admin->rid;

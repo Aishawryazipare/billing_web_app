@@ -6,9 +6,10 @@
             <th style="text-align:center;">Sr.No.</th>
             <th style="text-align:center;">Date</th>
             <th style="text-align:center;">Bill No</th>
+	    <th style="text-align:center;">Order No.</th>
             <th style="text-align:center;">Customer Name</th>
             <th style="text-align:center;">Total Amount</th>
-            <th style="text-align:center;">Cash/Credit</th>
+            <th style="text-align:center;">Payment Method</th>
             <th style="text-align:center;">POS</th>
             <th style="text-align:center;">Location</th>
             <th style="text-align:center;">User</th>
@@ -45,6 +46,7 @@
         <tr>
             <td style="text-align:center;">{{$i}}</td>
             <td style="text-align:center;">{{$data->bill_date}}</td>
+	    <td style="text-align:center;">{{$data->bill_code}}</td>
             <td style="text-align:center;">{{$data->bill_no}}</td>
             <td style="text-align:center;">{{$customer_name}}</td>
             <td style="text-align:center;">{{$data->bill_totalamt}}</td>
@@ -61,7 +63,7 @@
             <td style="text-align:center;">Total</td>
             <td></td>
             <td></td>
-            <td></td>
+            <td></td><td></td>
             <td style="text-align:center;">{{$total_amt}}</td>
             <td style="text-align:center;">{{$total_cash}}</td>
             <td></td>

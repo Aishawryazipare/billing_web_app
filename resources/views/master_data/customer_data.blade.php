@@ -49,7 +49,7 @@
                             <td>{{$c->email_id}}</td> 
                             <td>
                                 <a href="{{ url('edit-customer?cust_id='.$c->cust_id)}}"><span class="fa fa-edit"></span></a>
-                                <a href="{{ url('delete-customer')}}/{{$c->cust_id}}" style="color:red" class="delete"><span class="fa fa-trash"></span></a>
+                                <button style="color:red;background-color: #f9f9f9;border: none;padding:1px;" class="delete" id='{{$c->cust_id}}'><span class="fa fa-trash"></span></button>
                             </td>
                         </tr>
                     @endforeach
@@ -67,9 +67,34 @@
 <script src="js/sweetalert.min.js"></script>
 <script>
 $(document).ready(function(){
-    $(".delete").on("click",function(){
-        return confirm('Are you sure to delete');
-    });
+    $(".delete").on("click", function () {
+        var id = this.id;
+//        alert(id);
+        swal({
+            title: "Please Conform",
+            text: "You want to Delete Customer?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                 $.ajax({
+                   url: 'delete-customer/' + id,
+                    type: 'get',
+                    success: function (response) {
+                         location.reload();
+                    }
+                });
+            } else {
+//                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
+                swal("Cancelled", "", "error");
+            }
+        });
+    })
     
 });
 $(function () {

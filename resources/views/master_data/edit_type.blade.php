@@ -44,7 +44,8 @@
                     </div>
                </div>
              <div class="box-footer">
-               <button type="submit" class="btn btn-info" id="btn_submit" name="btn_submit">Submit</button>
+               <button type="submit" class="btn btn-info" id="btn_submit" name="btn_submit">Update</button>
+               <a href="{{url('type_data')}}" class="btn btn-danger" >Cancel</a>
              </div>
            </form>
          </div>

@@ -28,8 +28,15 @@
                         </div>
                     </div>
                 </div>
+		  <div class="form-group" style="display:none;">
+                               <label for="lbl_type_name" class="col-sm-2 control-label">Counter Sell<span style="color:#ff0000;">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="counter_sell" placeholder="Counter sell" name="counter_sell" required>
+                        </div>
+                    </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-success" id="btn_submit" name="btn_submit">Submit</button>
+                <a href="{{url('payment_data')}}" class="btn btn-danger" >Cancel</a>
               </div>
             </form>
           </div>

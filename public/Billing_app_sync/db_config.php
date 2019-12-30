@@ -1,9 +1,9 @@
 <?php 
 
 $hostname = "localhost";
-$dbusername = "root";
-$dbpassword = "";
-$dbname = "billing_app_new";
+$dbusername = "ipinguser";
+$dbpassword = "iPing@321";
+$dbname = "billing_app";
  
 $con = mysqli_connect($hostname,$dbusername,$dbpassword,$dbname); 
 

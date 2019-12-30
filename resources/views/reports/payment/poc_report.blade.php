@@ -89,7 +89,7 @@
                         </div>
                     <div class="box-footer">
                         <button type="button"  id="btnsubmit" class="btn btn-success"><i class="fa fa-fw fa-eye"></i>View</button>
-                        <button type="submit"  id="download" class="btn btn-primary"><i class="fa fa-fw fa-download"></i>Download</button>
+			<button type="submit"  id="download" class="btn btn-primary"><i class="fa fa-fw fa-download"></i>Download</button>
                         <a href="{{url('point_of_contact')}}" class="btn btn-danger" >Cancel</a>
                     </div>
                 </form>
@@ -130,9 +130,10 @@
                   <th style="width:20px;">No</th>
 				   <th style="width:20px;">Date</th>
                   <th style="width:20px;">Bill No</th>
+	   	 <th style="width:20px;">order No</th>
                   <th style="width:auto;">Customer Name</th>
                   <th style="width:50px;">Total Amount</th>
-                  <th style="width:20px;">Cash/Credit</th>
+                  <th style="width:20px;">Payment Method</th>
                   <th style="width:20px;">POS</th>
                   <th style="width:50px;">Location</th>
                   <th>User</th>
@@ -177,7 +178,8 @@ $(document).ready(function () {
             var r = new Array();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
-				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
+		r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
+		r[++j] = '<tr><td>'+result[key].order_no+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_no+'<input type="hidden" class="bill_no" value="'+result[key].bill_no+'"/></td></tr>';
                 r[++j] ='<tr><td>'+result[key].cust_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_totalamt+'</td></tr>';
@@ -242,6 +244,7 @@ table.clear().draw();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
 				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
+		r[++j] = '<tr><td>'+result[key].order_no+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_no+'<input type="hidden" class="bill_no" value="'+result[key].bill_no+'"/></td></tr>';
                 r[++j] ='<tr><td>'+result[key].cust_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_totalamt+'</td></tr>';

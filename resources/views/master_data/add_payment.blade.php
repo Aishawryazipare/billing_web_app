@@ -31,6 +31,7 @@
                 </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-success" id="btn_submit" name="btn_submit">Submit</button>
+                <a href="{{url('payment_data')}}" class="btn btn-danger" >Cancel</a>
               </div>
             </form>
           </div>

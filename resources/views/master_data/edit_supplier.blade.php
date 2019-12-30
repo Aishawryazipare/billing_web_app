@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Add Supplier')
+@section('title', 'Edit Supplier')
 @section('content')
 <section class="content-header">
       <h1>
@@ -49,14 +49,14 @@
                   
                 <label class="col-sm-2 control-label">Address</label>  
                     <div class="col-sm-4">
-                    <textarea class="form-control" rows="3" placeholder="Enter Address..." name="sup_address" id="sup_address">{{$supplier_data->sup_address}}</textarea>   
+                    <textarea class="form-control" rows="3" placeholder="Enter Address..." name="sup_address" id="sup_address" style='resize: vertical; max-width: 400px; min-width: 200px;'>{{$supplier_data->sup_address}}</textarea>   
                     </div>
                 </div>
                 
                   
               </div>
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Update</button>
                   <a href="{{url('supplier_data')}}" class="btn btn-danger" >Cancel</a>
               </div>
             </form>

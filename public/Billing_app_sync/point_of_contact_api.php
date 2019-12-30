@@ -21,6 +21,7 @@ if ($result=mysqli_query($con,$sql))
 	{
 		$flag['id']=$obj->id;
 		$flag['point_of_contact']=$obj->point_of_contact;
+		$flag['counter_sell']=$obj->counter_sell;
 		$flag['is_active']=$obj->is_active;
 		$flag['cid']=$obj->cid;
 		$flag['lid']=$obj->lid;

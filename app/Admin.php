@@ -19,7 +19,7 @@
         protected $fillable = [
             'reg_companyname', 'reg_personname', 'reg_mobileno','reg_emailid' ,'reg_address' ,'reg_username' ,'password' 
             ,'reg_companyid' ,'reg_dealercode' ,'created_at' ,'modified_at' ,'permission', 'is_active',
-            'location','permission','reg_userpassword','activate_flag','upload_logo'
+            'location','permission','reg_userpassword','activate_flag','activate_date','upload_logo'
         ];
 
         protected $hidden = [

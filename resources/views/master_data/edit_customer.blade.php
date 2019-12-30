@@ -7,7 +7,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i>  Master Data</a></li>
-        <li class="active">Add User</li>
+        <li class="active">Edit Customer
       </ol>
     </section>
    <section class="content">
@@ -51,14 +51,14 @@
                   </div>
                 <label class="col-sm-2 control-label">Address</label>  
                     <div class="col-sm-4">
-                    <textarea class="form-control" rows="3" placeholder="Enter Address..." name="address" value="">{{$customer_data->address}}</textarea>   
+                    <textarea class="form-control" rows="3" placeholder="Enter Address..." name="address" style='resize: vertical; max-width: 400px; min-width: 200px;'>{{$customer_data->address}}</textarea>   
                     </div>
                 </div>
                 
                   
               </div>
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Update</button>
                   <a href="{{url('customer_data')}}" class="btn btn-danger" >Cancel</a>
               </div>
             </form>

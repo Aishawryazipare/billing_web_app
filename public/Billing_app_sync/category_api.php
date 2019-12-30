@@ -16,7 +16,7 @@ $cat_datetime=$_POST['cat_datetime'];
 if($lid == 'null'){
 	$sql="SELECT * FROM bil_category WHERE updated_at>='$cat_datetime' AND cid=$cid LIMIT $Firstlimit, $Secondlimit";
 }else{
-	echo $sql="SELECT * FROM bil_category WHERE updated_at>='$cat_datetime' AND cid=$cid AND lid=$lid LIMIT $Firstlimit, $Secondlimit";
+	$sql="SELECT * FROM bil_category WHERE updated_at>='$cat_datetime' AND cid=$cid AND lid=$lid LIMIT $Firstlimit, $Secondlimit";
 }
 $new_arr=array();
 if ($result=mysqli_query($con,$sql))

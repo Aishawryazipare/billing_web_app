@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'User-List')
+@section('title', 'User List')
 @section('content')
   <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <section class="content-header">
@@ -20,7 +20,7 @@
   <section class="content">
    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">USER LIST</h3><a href="{{url('register')}}" class="panel-title" style="margin-left: 81%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New User</a>
+              <h3 class="box-title">USER LIST</h3><a href="{{url('register')}}" class="panel-title" style="margin-left: 78%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New User</a>
             </div>
             <!-- /.box-header -->
              <?php $x = 1; ?>
@@ -29,6 +29,7 @@
                 <thead>
                 <tr>
                   <th>Sr.No</th>
+	          <th>Employee Code</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Mobile No.</th>
@@ -42,13 +43,15 @@
                                 ?>
                                     <tr>
                                         <td>{{$x++}}</td>
-                                        <td>{{$u->name}}</td>
+                                        <td>{{$u->employee_code}}</td>
+					<td>{{$u->name}}</td>
                                         <td>{{$u->email}}</td>
                                         <td>{{$u->mobile_no}}</td>
                                         <td>{{$u->address}}</td>
                                         <td>
                                             <a href="{{ url('edit-user?id='.$u->id)}}"><span class="fa fa-edit"></span></a>
-                                            <a href="{{ url('delete-user')}}/{{$u->id}}" style="color:red" class="delete"><span class="fa fa-trash"></span></a>
+                                            <button style="color:red;background-color: #f9f9f9;border: none;padding:1px;" class="delete" id='{{$u->id}}'><span class="fa fa-trash"></span></button>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach
@@ -69,9 +72,34 @@
 <script>
 $(document).ready(function(){
 //    alert();
-    $(".delete").on("click",function(){
-        return confirm('Are you sure to delete user');
-    });
+    $(".delete").on("click", function () {
+        var id = this.id;
+//        alert(id);
+        swal({
+            title: "Please Conform",
+            text: "Are you sure to Delete User?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                 $.ajax({
+                   url: 'delete-user/' + id,
+                    type: 'get',
+                    success: function (response) {
+                         location.reload();
+                    }
+                });
+            } else {
+//                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
+                swal("Cancelled", "", "error");
+            }
+        });
+    })
 });
 $(function () {
     $('#example1').DataTable()

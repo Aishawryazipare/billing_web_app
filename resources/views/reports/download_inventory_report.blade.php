@@ -8,6 +8,7 @@
             <th style="text-align:center;">Item</th>
             <th style="text-align:center;">Quantity</th>
             <th style="text-align:center;">Status</th>
+	    <th style="text-align:center;">Remaining Quantity</th>
             <th style="text-align:center;">Location</th>
             <th style="text-align:center;">User</th>
         </tr>
@@ -34,6 +35,7 @@
             <td style="text-align:center;">{{$data->inventoryitemid}}</td>
             <td style="text-align:center;">{{$data->inventoryitemquantity}}</td>
             <td style="text-align:center;">{{$data->inventorystatus}}</td>
+	    <td style="text-align:center;">{{$data->item_stock}}</td>
             <td style="text-align:center;">{{$data->loc_name}}</td>
             <td style="text-align:center;">{{$user_data->name}}</td>
         </tr>

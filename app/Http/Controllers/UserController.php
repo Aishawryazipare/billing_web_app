@@ -33,6 +33,13 @@ class UserController extends Controller
             echo "Mobile No Already exists!";
         }
     }
+
+    public function validateEmployeeMobile($id) {
+        $id = trim($id);
+        if (\App\Employee::where('mobile_no', $id)->exists()) {
+            echo "Mobile No Already exists!";
+        }
+    }
     
     public function addEmployee(){
         $city = \App\City::select('city_id','city_name')->get();
@@ -97,8 +104,9 @@ class UserController extends Controller
         }
 		 $requestData['android_password'] =$requestData['password'];
         $requestData['password'] = bcrypt($requestData['password']);
-        \App\Employee::create($requestData);
-        
+	$requestData['employee_code']=strtoupper($this->random_code(4)); 
+       \App\Employee::create($requestData);
+         Session::flash('alert-success','User added successfully.');
         return redirect('user-list');
     }
     
@@ -131,7 +139,7 @@ class UserController extends Controller
             $requestData['password'] = bcrypt($request->password);
         $users = \App\Employee::findorfail($id);
         $users->update($requestData);
-        Session::flash('alert-success', 'Updated Successfully.');
+        Session::flash('alert-success', 'User updated Successfully.');
         return redirect('user-list');
     }
     
@@ -142,6 +150,10 @@ class UserController extends Controller
 		//echo "<pre/>";print_r($query);exit;
         Session::flash('alert-success', 'Deleted Successfully.');
         return redirect('user-list');
+    }
+    public function random_code($limit)
+    {
+    return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
     }
    
 }

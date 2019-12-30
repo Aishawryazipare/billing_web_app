@@ -21,9 +21,9 @@
 <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
         <input type="text" id="email" name="reg_mobileno" class="form-control" placeholder="Mobile">
         <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
-        @if ($errors->has('email'))
-            <span class="help-block">
-                <strong>{{ $errors->first('email') }}</strong>
+        @if ($errors->has('reg_mobileno'))
+            <span class="help-block" style='color:#dd4b39;'>
+                <strong>Mobile No. is required</strong>
             </span>
         @endif
       </div>

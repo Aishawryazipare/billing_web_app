@@ -51,7 +51,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
               $cid = $this->admin->rid;
@@ -214,6 +214,9 @@ class TaxController extends Controller
                                         ->selectRaw('sum(bill_tax) as total_tax')
                                         ->where(['bill_no'=>$data->bill_no,'isactive'=>0])
                                         ->first();
+	      if($data->bill_code==NULL)
+	      $data->bill_code="";
+	    $result_data['order_no']=$data->bill_code;
              $result_data['bill_no']=$data->bill_no;
              $result_data['total_rate']=$bill_detail_data->total_rate;
              $result_data['total_discount']=$bill_detail_data->total_discount;
@@ -257,7 +260,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
           $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
        //  echo "<pre/>";print_r($requestData);exit;
          if(Auth::guard('admin')->check()){
@@ -607,7 +610,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
          
          if(Auth::guard('admin')->check()){
             $cid = $this->admin->rid;
@@ -742,7 +745,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
          
          if(Auth::guard('admin')->check()){
             $cid = $this->admin->rid;
@@ -891,7 +894,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
          
          if(Auth::guard('admin')->check()){
             $cid = $this->admin->rid;
@@ -1055,7 +1058,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
         $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
          if(Auth::guard('admin')->check()){
             $id = $this->admin->rid;
              if(isset($requestData['location']))
@@ -1238,7 +1241,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
             if(Auth::guard('admin')->check()){
             $id = $this->admin->rid;
                    if(isset($requestData['location']))
@@ -1372,7 +1375,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
               $cid = $this->admin->rid;
@@ -1572,7 +1575,7 @@ class TaxController extends Controller
           $to_date = $from_date;
         
           $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
                $cid = $this->admin->rid;

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit user')
+@section('title', 'Edit User')
 @section('content')
 <style>
     .error{
@@ -8,11 +8,11 @@
 </style>
 <section class="content-header">
       <h1>
-          Edit Employee
+          Edit User
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{url('user_mgt')}}"><i class="fa fa-dashboard"></i>Employee</a></li>
-        <li class="active">Edit Employee</li>
+        <li><a href="{{url('user_mgt')}}"><i class="fa fa-dashboard"></i>User</a></li>
+        <li class="active">Edit User</li>
       </ol>
     </section>
 <section class="content">
@@ -68,7 +68,7 @@
                         <div class="form-group">
                             <label for="company" class="col-sm-4 control-label">Address</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="address" placeholder="Address" name="address" required >{{$userData->address}}</textarea>
+                                <textarea class="form-control" id="address" placeholder="Address" name="address" style='resize: vertical; max-width: 600px; min-width: 200px;' required >{{$userData->address}}</textarea>
                             </div>
                         </div>
                     </div>

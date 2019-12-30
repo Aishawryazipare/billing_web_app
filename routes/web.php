@@ -348,3 +348,31 @@ Route::post('download_payment_report','PaymentController@downloadPayment');
 
 
 
+Route::get('employee-mobile/{id}','UserController@validateEmployeeMobile');
+Route::get('mobile-validate/{id}','AdminValidationController@validateMobile');
+
+
+//check expriry
+Route::get('check_expiry','HomeController@check_expiry');
+//table
+Route::get('table_data','TableController@getTableData');
+Route::get('add_table','TableController@getTable');
+Route::get('add_waiter','TableController@getWaiter');
+Route::post('add_table','TableController@addTable');
+Route::post('add_waiter','TableController@addWaiter');
+Route::get('edit_table','TableController@editTable');
+Route::get('edit_waiter','TableController@editWaiter');
+Route::post('edit_table','TableController@updateTable');
+Route::post('edit_waiter','TableController@updateWaiter');
+Route::get('delete_table/{id}','TableController@DeleteTable');
+Route::get('delete_waiter/{id}','TableController@DeleteWaiter');
+
+//table ordering
+Route::get('table_order','TableController@view_order_table');
+Route::get('check_book_table','TableController@check_order_table');
+Route::post('add_tbl_bill','TableController@add_tbl_bill');
+Route::post('move_temp_bill','TableController@move_tbl_bill');
+Route::get('delete_temp_id','TableController@delete_temp_item');
+//table report
+Route::get('table_report','TableReportController@view_report');
+Route::post('table_report','TableReportController@fetchTable');

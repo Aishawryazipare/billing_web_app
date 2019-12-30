@@ -205,8 +205,8 @@ $a=0;
          <!-- small box -->
          <div class="small-box <?php echo $color_array[$b];?>">
            <div class="inner">
-             <h3 style="font-size:55px;">{{$loc->orders}}</h3>
-             <p style="font-size:16px;">Bills</p>
+             <p style="font-size:25px;">Sales Amt:Rs.{{round($loc->total,2)}}</p>
+             <p style="font-size:25px;">Total Bills:{{$loc->orders}}</p>
              <p style="font-size:26px;font-weight:bold;">{{$loc->loc_name}}</p>
            </div>
            <div class="icon" style="top:18px;right:20px;">

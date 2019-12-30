@@ -129,7 +129,8 @@
                 <tr>
                   <th style="width:20px;">No</th>
 				   <th style="width:20px;">Date</th>
-                  <th style="width:20px;">Bill No</th>
+		   <th style="width:20px;">Bill No</th>
+                  <th style="width:20px;">Order No</th>
                   <th style="width:20;">Basic Amt</th>
                   <th style="width:50px;">Disc Amt</th>
                   <th style="width:20px;">Total Tax</th>
@@ -177,6 +178,7 @@ table.clear().draw();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
 				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
+		r[++j] = '<tr><td>'+result[key].order_no+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_no+'<input type="hidden" class="bill_no" value="'+result[key].bill_no+'"/></td></tr>';
                 r[++j] ='<tr><td>'+result[key].total_rate+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].total_discount+'</td></tr>';
@@ -238,6 +240,7 @@ table.clear().draw();
 // represent columns as array
                 r[++j] ='<tr><td>'+i+'</td></tr>';
 				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
+		r[++j] = '<tr><td>'+result[key].order_no+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].bill_no+'<input type="hidden" class="bill_no" value="'+result[key].bill_no+'"/></td></tr>';
                 r[++j] ='<tr><td>'+result[key].total_rate+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].total_discount+'</td></tr>';

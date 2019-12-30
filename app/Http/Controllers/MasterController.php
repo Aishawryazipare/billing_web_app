@@ -114,7 +114,7 @@ class MasterController extends Controller
             $requestData['emp_id'] = $this->employee->id;
         }
         Type::create($requestData);
-        Session::flash('alert-success','Added Successfully.');
+        Session::flash('alert-success','Unit added successfully.');
         return redirect('type_data');
     }
     
@@ -125,7 +125,7 @@ class MasterController extends Controller
 		$requestData['sync_flag']=0;
         $query =Type::findorfail($type_id);
         $query->update($requestData);
-        Session::flash('alert-success','Updated Successfully.');
+        Session::flash('alert-success','Unit updated successfully.');
         return redirect('type_data');
     }
     
@@ -235,7 +235,7 @@ class MasterController extends Controller
             $requestData['cat_image']="cat.png";
         }
         Category::create($requestData);
-        Session::flash('alert-success','Added Successfully.');
+        Session::flash('alert-success','Category added successfully.');
         return redirect('category_data');
     }
     
@@ -302,7 +302,7 @@ class MasterController extends Controller
 		$requestData['sync_flag']=0;
         $query =Category::findorfail($cat_id);
         $query->update($requestData);
-        Session::flash('alert-success','Updated Successfully.');
+        Session::flash('alert-success','Category Updated Successfully.');
         return redirect('category_data');
     }
     
@@ -458,7 +458,7 @@ class MasterController extends Controller
 //        echo "<pre>";
 //        print_r($requestData);exit;
         \App\Customer::create($requestData);
-        Session::flash('alert-success','Added Successfully.');
+        Session::flash('alert-success','Customer added successfully.');
         return redirect('customer_data');
     }
     
@@ -499,7 +499,7 @@ class MasterController extends Controller
 		$requestData['sync_flag']=0;
          $users = \App\Customer::findorfail($cust_id);
         $users->update($requestData);
-        Session::flash('alert-success','Updated Successfully.');
+        Session::flash('alert-success','Customer updated successfully.');
         return redirect('customer_data');
     }
     
@@ -681,7 +681,7 @@ class MasterController extends Controller
 //        echo "<pre>";
 //        print_r($requestData['cat_image']);
         \App\Item::create($requestData);
-        Session::flash('alert-success','Added Successfully.');
+        Session::flash('alert-success','Item added successfully.');
         return redirect('item_data');
     }
     
@@ -769,7 +769,7 @@ class MasterController extends Controller
 		$requestData['sync_flag']=0;
          $users = \App\Item::findorfail($item_id);
         $users->update($requestData);
-        Session::flash('alert-success','Updated Successfully.');
+        Session::flash('alert-success','Item updated successfully.');
         return redirect('item_data');
     }
     
@@ -799,7 +799,7 @@ class MasterController extends Controller
 //        echo "<pre>";
 //        print_r($requestData);exit;
         \App\Supplier::create($requestData);
-        Session::flash('alert-success','Added Successfully.');
+        Session::flash('alert-success','Supplier added successfully.');
         return redirect('supplier_data');
     }
     
@@ -891,7 +891,7 @@ class MasterController extends Controller
         $sup_id=$requestData['sup_id'];
          $users = \App\Supplier::findorfail($sup_id);
         $users->update($requestData);
-        Session::flash('alert-success','Updated Successfully.');
+        Session::flash('alert-success','Supplier updated successfully.');
         return redirect('supplier_data');
     }
     
@@ -1023,12 +1023,14 @@ class MasterController extends Controller
         if(isset($requestData['payment_type']))
         {
             \App\PaymentType::create($requestData);
+            $type="Payment Type";
         }
         if(isset($requestData['point_of_contact']))
         {
             \App\PointOfContact::create($requestData);
+            $type="POS";
         }
-        Session::flash('alert-success','Added Successfully.');
+        Session::flash('alert-success',$type.' Added Successfully.');
         return redirect('payment_data');
     }
     public function DeletePayment($sup_id)
@@ -1091,7 +1093,7 @@ class MasterController extends Controller
         $sup_id=$requestData['id'];
          $users = \App\PointOfContact::findorfail($sup_id);
         $users->update($requestData);
-        Session::flash('alert-success','Updated Successfully.');
+        Session::flash('alert-success','POS Updated Successfully.');
         return redirect('payment_data');
     }
      public function editPayment()
@@ -1138,7 +1140,7 @@ class MasterController extends Controller
         $sup_id=$requestData['id'];
          $users = \App\PaymentType::findorfail($sup_id);
         $users->update($requestData);
-        Session::flash('alert-success','Updated Successfully.');
+        Session::flash('alert-success','Payment Updated Successfully.');
         return redirect('payment_data');
     }
     

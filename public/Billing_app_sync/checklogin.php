@@ -21,6 +21,7 @@ include 'config.php';
 		$data['lid']=$obj->lid;
 		$data['cid']=$obj->cid;
 		$data['emp_id']=$obj->id;
+		$data['employee_code']=$obj->employee_code;
 	}
 	$data['status']="success";
  

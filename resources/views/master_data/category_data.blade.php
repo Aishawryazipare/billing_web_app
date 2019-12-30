@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Category-List')
+@section('title', 'Category List')
 @section('content')
 <link href="css/sweetalert.css" rel="stylesheet">
 <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
@@ -24,9 +24,11 @@
    <div class="box">
             <div class="box-header">
 			<?php if($flag==1) {?>
-			  <button type="button" class="btn btn-success" id="sync_btn" name="sync_btn" style="margin-left:91%"><i class="fa fa-fw fa-cloud-upload"></i>Sync</button>
+			  <button type="button" class="btn btn-success" id="sync_btn" name="sync_btn" style="margin-left:82%"><i class="fa fa-fw fa-cloud-upload"></i>Sync</button>
 			<?php } ?>
-              <h3 class="box-title">CATEGORY LIST</h3><a href="{{url('add_category')}}" class="panel-title" style="margin-left: 73%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Category</a>
+                          <a href="{{url('add_category')}}" class="panel-title" style="margin-left: 0%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Category</a>
+             <br/>
+             <h3 class="box-title">CATEGORY LIST</h3>
             </div>
             <!-- /.box-header -->
              <?php $x = 1; ?>
@@ -46,7 +48,8 @@
                             <td>{{$c->cat_name}}</td> 
                             <td>
                                 <a href="{{ url('edit-category?cat_id='.$c->cat_id)}}"><span class="fa fa-edit"></span></a>
-                                <a href="{{ url('delete-category')}}/{{$c->cat_id}}" style="color:red" class="delete"><span class="fa fa-trash"></span></a>
+                                <button style="color:red;background-color: #f9f9f9;border: none;padding:1px;" class="delete" id='{{$c->cat_id}}'><span class="fa fa-trash"></span></button>
+                                <!--<a href="{{ url('delete-category')}}/{{$c->cat_id}}" style="color:red" class="deleteq"><span class="fa fa-trash"></span></a>-->
                             </td>
                         </tr>
                     @endforeach
@@ -64,9 +67,37 @@
 <script src="js/sweetalert.min.js"></script>
 <script>
 $(document).ready(function(){
-    $(".delete").on("click",function(){
-        return confirm('Are you sure to delete');
-    });
+//    $(".delete").on("click",function(){
+//        return confirm('Are you sure to delete');
+//    });
+    $(".delete").on("click", function () {
+        var id = this.id;
+//        alert(id);
+        swal({
+            title: "Please Conform",
+            text: "You want to Delete Category ?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                 $.ajax({
+                   url: 'delete-category/' + id,
+                    type: 'get',
+                    success: function (response) {
+                         location.reload();
+                    }
+                });
+            } else {
+//                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
+                swal("Cancelled", "", "error");
+            }
+        });
+    })
 $( "#sync_btn" ).click(function() {
         var msg="Master Data";
         $.ajax({

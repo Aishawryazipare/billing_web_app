@@ -25,7 +25,7 @@
                 <div class="col-md-6">   
    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Payment LIST</h3><a href="{{url('add_payment')}}" class="panel-title" style="margin-left: 55%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Payment</a>
+              <h3 class="box-title">Payment LIST</h3><a href="{{url('add_payment')}}" class="panel-title" style="margin-left: 43%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Payment</a>
             </div>
             <!-- /.box-header -->
              <?php $x = 1; ?>
@@ -45,7 +45,7 @@
                             <td>{{$t->payment_type}}</td>
                             <td>
                                 <a href="{{ url('edit-payment?id='.$t->id)}}"><span class="fa fa-edit"></span></a>
-                                <a href="{{ url('delete-payment')}}/{{$t->id}}" style="color:red" class="delete"><span class="fa fa-trash"></span></a>
+                                <button style="color:red;background-color: #f9f9f9;border: none;padding:1px;" class="payment_delete" id='{{$t->id}}'><span class="fa fa-trash"></span></button>
                             </td>
                         </tr>
                     @endforeach
@@ -68,6 +68,7 @@
                 <tr>
                   <th style="width:50px;">Sr.No</th>
                   <th>Name</th>
+		  <th>Counter Sell</th>
                   <th style="width: 100px;">Action</th>
                 </tr>
                 </thead>
@@ -76,9 +77,10 @@
                         <tr>
                             <td>{{$x++}}</td>
                             <td>{{$t->point_of_contact}}</td>
+			    <td>{{$t->counter_sell}}</td>
                             <td>
                                 <a href="{{ url('edit-contact?id='.$t->id)}}"><span class="fa fa-edit"></span></a>
-                                <a href="{{ url('delete-contact')}}/{{$t->id}}" style="color:red" class="delete"><span class="fa fa-trash"></span></a>
+                                <button style="color:red;background-color: #f9f9f9;border: none;padding:1px;" class="pos_delete" id='{{$t->id}}'><span class="fa fa-trash"></span></button>
                             </td>
                         </tr>
                     @endforeach
@@ -99,10 +101,62 @@
 <script src="js/sweetalert.min.js"></script>
 <script>
 $(document).ready(function(){
-    $(".delete").on("click",function(){
-        return confirm('Are you sure to delete');
-    });
-    
+    $(".payment_delete").on("click", function () {
+        var id = this.id;
+//        alert(id);
+        swal({
+            title: "Please Conform",
+            text: "Are you sure to Payment Type?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                 $.ajax({
+                   url: 'delete-payment/' + id,
+                    type: 'get',
+                    success: function (response) {
+                         location.reload();
+                    }
+                });
+            } else {
+//                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
+                swal("Cancelled", "", "error");
+            }
+        });
+    })
+    $(".pos_delete").on("click", function () {
+        var id = this.id;
+//        alert(id);
+        swal({
+            title: "Please Conform",
+            text: "Are you sure to Delete POS?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                 $.ajax({
+                   url: 'delete-contact/' + id,
+                    type: 'get',
+                    success: function (response) {
+                         location.reload();
+                    }
+                });
+            } else {
+//                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
+                swal("Cancelled", "", "error");
+            }
+        });
+    })
 });
 $(function () {
     $('#example1').DataTable()

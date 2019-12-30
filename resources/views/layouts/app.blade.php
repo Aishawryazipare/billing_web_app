@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>One Care App</title>
+  <title>One Care App - @yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Ionicons -->
@@ -107,6 +107,22 @@
             autoclose: true,
             todayHighlight: true
     })
+     $.ajax({
+                            url: 'check_expiry',
+                            type: "GET",
+                            success: function(result) 
+                            {
+                                console.log(result);
+                                var a=JSON.parse(result);
+                                if(a=="updated")
+                                {
+                                    swal({ type: "success", title: "Done!", confirmButtonColor: "#292929", text: "Your Account is Expired!!", confirmButtonText: "Ok" }, 
+                                function() {
+                                    //$('#logout-form').submit();
+                                });
+                                }
+                            }
+                        });
 //        var mouseY = 0;
 //       var topValue = 0;
 //       window.addEventListener("mouseout",function(e){

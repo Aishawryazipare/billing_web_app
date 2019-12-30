@@ -16,6 +16,7 @@
             <th  style="text-align:center;">Sr.No.</th>
             <th style="text-align:center;">Date</th>
             <th style="text-align:center;">Bill No</th>
+	    <th style="text-align:center;">Order No</th>
 			<th style="text-align:center;">Customer Name</th>
             <th style="text-align:center;">Item</th>
             <th style="text-align:center;">Basic Amount</th>
@@ -44,17 +45,22 @@
                       $j=1;
                       $total_amt=$total_disc_amt=$total_tax_amt=$total_dis_rate=0;
            $total_amt=$total_amt+$data->bill_totalamt;
+		if($data->app_bill_id=="")
                      $dros_out = App\BillDetail::where(['bill_no' => $data->bill_no])->get();
+		else
+			$dros_out = App\BillDetail::where(['bill_no' => $data->app_bill_id,'emp_id'=>$data->emp_id])->get();
+		
            
                        $count = count($dros_out);
                       
                       //$total_cash=$total_cash+$data->cash_or_credit;
                       ?>
         <tr>
-            <td rowspan="{{$count}}" style="text-align:center;">{{$i}}</td>
-            <td rowspan="{{$count}}" style="text-align:center;">{{$data->bill_date}}</td>
-            <td rowspan="{{$count}}" style="text-align:center;">{{$data->bill_no}}</td>
-			 <td rowspan="{{$count}}" style="text-align:center;">{{$customer_name}}</td>
+            <td rowspan="{{$count}}" style="text-align:center;vertical-align:middle;">{{$i}}</td>
+            <td rowspan="{{$count}}" style="text-align:center;vertical-align:middle;">{{$data->bill_date}}</td>
+            <td rowspan="{{$count}}" style="text-align:center;vertical-align:middle;">{{$data->bill_code}}</td>
+	    <td rowspan="{{$count}}" style="text-align:center;vertical-align:middle;">{{$data->bill_no}}</td>
+			 <td rowspan="{{$count}}" style="text-align:center;vertcal-align:middle;">{{$customer_name}}</td>
             <?php 
              foreach ($dros_out as $dross)
              {
@@ -96,7 +102,7 @@
             <td style="text-align:center;"><b>Total</b></td>
             <td></td>
             <td></td>
-			 <td></td>
+			 <td></td><td></td>
             <td style="text-align:center;"></td>
             <td style="text-align:center;"></td>
             <td style="text-align:center;"></td>
@@ -123,7 +129,7 @@
 			 <td></td>
             <td style="text-align:center;"><b>Total Bills</b></td>
             <td style="text-align:center;">{{$i}}</td>
-             <td></td><td></td><td></td><td></td>
+             <td></td><td></td><td></td><td></td><td></td>
             <td></td><td></td><td></td><td></td>
         </tr>
        

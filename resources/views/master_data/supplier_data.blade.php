@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Supplier-List')
+@section('title', 'Supplier List')
 @section('content')
 <link href="css/sweetalert.css" rel="stylesheet">
 <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
@@ -49,7 +49,8 @@
                             <td>{{$c->sup_email_id}}</td> 
                             <td>
                                 <a href="{{ url('edit-supplier?sup_id='.$c->sup_id)}}"><span class="fa fa-edit"></span></a>
-                                <a href="{{ url('delete-supplier')}}/{{$c->sup_id}}" style="color:red" class="delete"><span class="fa fa-trash"></span></a>
+                                <button style="color:red;background-color: #f9f9f9;border: none;padding:1px;" class="delete" id='{{$c->sup_id}}'><span class="fa fa-trash"></span></button>
+                                <!--<a href="{{ url('delete-supplier')}}/{{$c->sup_id}}" style="color:red" class="delete"><span class="fa fa-trash"></span></a>-->
                             </td>
                         </tr>
                     @endforeach
@@ -66,12 +67,39 @@
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="js/sweetalert.min.js"></script>
 <script>
-//$(document).ready(function(){
+$(document).ready(function(){
 //    $(".delete").on("click",function(){
 //        return confirm('Are you sure to delete');
 //    });
-//    
-//});
+    $(".delete").on("click", function () {
+        var id = this.id;
+//        alert(id);
+        swal({
+            title: "Please Conform",
+            text: "You want to Delete Supplier?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                 $.ajax({
+                   url: 'delete-supplier/' + id,
+                    type: 'get',
+                    success: function (response) {
+                         location.reload();
+                    }
+                });
+            } else {
+//                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
+                swal("Cancelled", "", "error");
+            }
+        });
+    })
+});
 $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({

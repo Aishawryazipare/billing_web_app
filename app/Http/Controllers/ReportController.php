@@ -51,7 +51,7 @@ class ReportController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
               $cid = $this->admin->rid;
@@ -210,6 +210,9 @@ class ReportController extends Controller
          {
              $total_amount = $total_amount + $data->bill_totalamt;
              $result_data['bill_no']=$data->bill_no;
+	     if($data->bill_code==NULL)
+	     $data->bill_code="";
+	     $result_data['order_no']=$data->bill_code;
              $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
              if(!empty($customer_data))
 			 {
@@ -295,7 +298,7 @@ class ReportController extends Controller
           $to_date = $from_date;
         
           $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
                $cid = $this->admin->rid;
@@ -458,7 +461,7 @@ class ReportController extends Controller
         $i=1;
 		
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
          
         if(Auth::guard('admin')->check()){
             $cid = $this->admin->rid;
@@ -472,18 +475,18 @@ class ReportController extends Controller
                       if(isset($requestData['employee']))
                       {
                           $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item-stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.emp_id'=>$requestData['employee']])
                      ->get();
                       }
                       else
                       {
                           $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid])
                      ->get();
                       }
@@ -493,18 +496,18 @@ class ReportController extends Controller
                        if(isset($requestData['employee']))
                       {
                           $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.lid'=>$lid,'bil_inventory.emp_id'=>$requestData['employee']])
                      ->get();
                       }
                       else
                       {
                           $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item-stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.lid'=>$lid])
                      ->get();
                       }
@@ -516,17 +519,17 @@ class ReportController extends Controller
                   if(isset($requestData['employee']))
                   {
                           $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.emp_id'=>$requestData['employee']])
                      ->get();
                   }
                   else{
                   $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid])
                      ->get();
                   }
@@ -536,7 +539,7 @@ class ReportController extends Controller
             $bill_data = DB::table('bil_inventory')
                      ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->get();
         }
         else if(Auth::guard('employee')->check()){
@@ -551,7 +554,7 @@ class ReportController extends Controller
             $bill_data = DB::table('bil_inventory')
                      ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid])
                      ->get();
             }
@@ -562,7 +565,7 @@ class ReportController extends Controller
                      $bill_data = DB::table('bil_inventory')
                      ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil-inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.lid'=>$lid])
                      ->get();
                  }
@@ -581,7 +584,7 @@ class ReportController extends Controller
                    $bill_data = DB::table('bil_inventory')
                      ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.lid'=>$lid])
                      ->get();
              }
@@ -598,6 +601,7 @@ class ReportController extends Controller
             $result_data['inventoryitemid']=$data->inventoryitemid;
             $result_data['inventoryitemquantity']=$data->inventoryitemquantity;
             $result_data['inventorystatus']=$data->inventorystatus;
+	    $result_data['stock']=$data->item_stock;
              if(isset($requestData['location']))
              {
              $location_data= \App\EnquiryLocation::select('*')->where(['loc_id'=>$data->lid])->first();
@@ -634,7 +638,7 @@ class ReportController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
          
          if(Auth::guard('admin')->check()){
             $cid = $this->admin->rid;
@@ -648,18 +652,18 @@ class ReportController extends Controller
                       if(isset($requestData['employee']))
                       {
                           $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.emp_id'=>$requestData['employee']])
                      ->get();
                       }
                       else
                       {
                           $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid])
                      ->get();
                       }
@@ -667,9 +671,9 @@ class ReportController extends Controller
                   }
                   else {
                       $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.lid'=>$lid])
                      ->get();
                   }
@@ -679,17 +683,17 @@ class ReportController extends Controller
             if(isset($requestData['employee']))
                   {
                           $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.emp_id'=>$requestData['employee']])
                      ->get();
                   }
                   else{
                   $bill_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddItems.item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
-                     ->whereBetween('created_at', [$from_date, $to_date])
+                     ->whereBetween('bil_inventory.created_at', [$from_date, $to_date])
                      ->where(['bil_inventory.cid'=>$cid])
                      ->get();
                   }
@@ -871,7 +875,7 @@ class ReportController extends Controller
           $to_date = $from_date;
         
         $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
          if(Auth::guard('admin')->check()){
             $id = $this->admin->rid;
              if(isset($requestData['location']))
@@ -1097,7 +1101,7 @@ class ReportController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
           if(Auth::guard('admin')->check()){
             $id = $this->admin->rid;
              if(isset($requestData['location']))
@@ -1302,7 +1306,7 @@ class ReportController extends Controller
           $to_date = $from_date;
         
          $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
               $cid = $this->admin->rid;
@@ -1459,6 +1463,9 @@ class ReportController extends Controller
          {
              $total_amount = $total_amount + $data->bill_totalamt;
              $result_data['bill_no']=$data->bill_no;
+             if($data->bill_code==NULL)
+	    $data->bill_code="";
+	    $result_data['order_no']=$data->bill_code;
               $customer_data= \App\Customer::select('*')->where(['cust_id'=>$data->cust_id])->first();
              if(!empty($customer_data))
 			 {
@@ -1516,7 +1523,7 @@ class ReportController extends Controller
           $to_date = $from_date;
         
           $from_date = date($from_date . ' 00:00:00', time());
-         $to_date   = date($to_date . ' 22:00:40', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
            
          if(Auth::guard('admin')->check()){
                $cid = $this->admin->rid;

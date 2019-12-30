@@ -109,6 +109,7 @@
            <li <?php if(Request::is('customer_data')) { ?>class="active" <?php } ?>><a href="{{url('customer_data')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Customer</a></li>
            <li <?php if(Request::is('supplier_data')) { ?>class="active" <?php } ?>><a href="{{url('supplier_data')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Supplier</a></li>
            <li <?php if(Request::is('payment_data')) { ?>class="active" <?php } ?>><a href="{{url('payment_data')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Payment & POS</a></li>
+           <!--<li <?php if(Request::is('table_data')) { ?>class="active" <?php } ?>><a href="{{url('table_data')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Tables & Waiter</a></li>-->
            </ul>
            </li>
             <li class="treeview">
@@ -120,7 +121,8 @@
           </a>
              <ul class="treeview-menu">
                 <li><a href="{{url('thumbnail')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Thumbnail Wise</a></li>
-                 <!--<li><a href="{{url('delete_bill')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Delete Bill</a></li>-->
+                <li><a href="{{url('table_order')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Table Order</a></li>
+ <!--<li><a href="{{url('delete_bill')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Delete Bill</a></li>-->
              </ul>
            
         </li>
@@ -236,7 +238,8 @@
           </a>
              <ul class="treeview-menu">
                 <li><a href="{{url('thumbnail')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Thumbnail Wise</a></li>
-                <!--<li><a href="{{url('delete_bill')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Cancel Bill</a></li>-->
+               <!--<li><a href="{{url('table_order')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Table Order</a></li>-->
+ <!--<li><a href="{{url('delete_bill')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Cancel Bill</a></li>-->
          </ul>
            
         </li>
@@ -258,6 +261,7 @@
            <li <?php if(Request::is('item_data')) { ?>class="active" <?php } ?>><a href="{{url('item_data')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Item</a></li>
            <li <?php if(Request::is('customer_data')) { ?>class="active" <?php } ?>><a href="{{url('customer_data')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Customer</a></li>
            <li <?php if(Request::is('supplier_data')) { ?>class="active" <?php } ?>><a href="{{url('supplier_data')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Supplier</a></li>
+           <!--<li <?php if(Request::is('table_data')) { ?>class="active" <?php } ?>><a href="{{url('table_data')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Tables & Waiter</a></li>-->
            </ul>
            </li>
            
@@ -287,7 +291,8 @@
           </a>
              <ul class="treeview-menu">
                 <li><a href="{{url('thumbnail')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Thumbnail Wise</a></li>
-                <!--<li><a href="{{url('delete_bill')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Cancel Bill</a></li>-->
+                <!--<li><a href="{{url('table_order')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Table Order</a></li>-->
+             <!--<li><a href="{{url('delete_bill')}}"><i class="fa fa-circle-o" style="color: #00ffc3;"></i>Cancel Bill</a></li>-->
          </ul>
            
         </li>

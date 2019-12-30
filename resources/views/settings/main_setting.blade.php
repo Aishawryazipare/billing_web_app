@@ -120,7 +120,7 @@
                         </div> 
 						@endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"  style="display:none;">
                         <label for="lbl_cat_name" class="col-sm-2 control-label">Reset Bill Number</label>
 						@if(@$hf_setting->reset_bill=="Yes")
 							<div class="col-sm-4">

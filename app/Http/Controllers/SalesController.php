@@ -102,7 +102,7 @@ class SalesController extends Controller
                             ->orWhere(['emp_id' => $sub_emp_id])
                             ->orWhere(['emp_id' => $emp_id])
                             ->get();
-				$customer_data = \App\Customer::select('*')->where(['cid'=>$cid,'is_active'=>0, 'lid' => $lid]) ->orWhere(['emp_id' => $sub_emp_id])
+		$customer_data = \App\Customer::select('*')->where(['cid'=>$cid,'is_active'=>0, 'lid' => $lid]) ->orWhere(['emp_id' => $sub_emp_id])
                             ->orWhere(['emp_id' => $emp_id])
 							->get();
                 }
@@ -136,6 +136,8 @@ class SalesController extends Controller
                     $bill_data = \App\BillMaster::select('bill_no')->where(['cid' => $cid, 'lid' => $lid])
                             ->orderBy('bill_no', 'desc')
                             ->first();
+		   $customer_data = \App\Customer::select('*')->where(['is_active'=>0,'cid'=>$cid,'lid'=>$lid])->get();
+		   
                       $payment_type = \App\PaymentType::select('*')->where(['cid' => $cid, 'lid' => $lid,'is_active'=>0])->get();
                      $point_of_data = \App\PointOfContact::select('*')->where(['cid' => $cid, 'lid' => $lid,'is_active'=>0])->get();
              }
@@ -471,8 +473,10 @@ class SalesController extends Controller
     }
     public function search(Request $request)
     {
+        $result="";
           $search = $request->get('term'); 
-		
+		if($search!="")
+                {
 		if(Auth::guard('admin')->check()){
         $cid = $this->admin->rid;
 		}
@@ -481,9 +485,9 @@ class SalesController extends Controller
                                ->orWhere('item_id', 'LIKE', '%'. $search. '%')
                                ->orWhere('item_barcode', 'LIKE', '%'. $search. '%')
                                 ->get();
- 
-          return response()->json($result);
-            
+                }
+        
+              return response()->json($result);
     } 
     public function downloadBill()
     {

@@ -26,6 +26,12 @@
                              <input type="text" class="form-control" id="point_of_contact" placeholder="Point Of Contact" name="point_of_contact" value="{{@$point_of_data->point_of_contact}}">
                         </div>
                     </div>
+		         <div class="form-group" style="display:none;">
+                        <label for="lbl_cat_name" class="col-sm-2 control-label">Counter Sell</label>
+                        <div class="col-sm-4">
+                             <input type="text" class="form-control" id="counter_sell" placeholder="Counter Sell" name="counter_sell" value="{{@$point_of_data->counter_sell}}">
+                        </div>
+                    </div>
                     <input style="display:none;" type="text" class="form-control" id="id" placeholder="POS" name="id" required value="{{@$point_of_data->id}}">
                    
                 </div>

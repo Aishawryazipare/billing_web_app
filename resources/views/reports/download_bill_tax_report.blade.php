@@ -16,6 +16,7 @@
             <th style="text-align:center;">Sr.No.</th>
             <th style="text-align:center;">Date</th>
             <th style="text-align:center;">Bill No</th>
+	    <th style="text-align:center;">Order No.</th>
             <th style="text-align:center;">Basic Amount</th>
             <th style="text-align:center;">Disc Amount</th>
             <th style="text-align:center;">Total Tax</th>
@@ -38,6 +39,7 @@
         <tr>
             <td style="text-align:center;">{{$i}}</td>
             <td style="text-align:center;">{{$data->bill_date}}</td>
+	    <td style="text-align:center;">{{$data->bill_code}}</td>
             <td style="text-align:center;">{{$data->bill_no}}</td>
             <td style="text-align:center;">{{$bill_detail_data->total_rate}}</td>
             <td style="text-align:center;">{{$bill_detail_data->total_discount}}</td>
@@ -51,7 +53,7 @@
         <tr>
             <td style="text-align:center;"><b>Total</b></td>
             <td></td>
-            <td></td>
+            <td></td><td></td>
             <td style="text-align:center;">{{$total_basic_amt}}</td>
             <td style="text-align:center;">{{$total_disc_amt}}</td>
             <td style="text-align:center;">{{$total_tax_amt}}</td>

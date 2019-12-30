@@ -29,7 +29,7 @@
   <section class="content">
    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">ITEM LIST</h3><a href="{{url('add_item')}}" class="panel-title" style="margin-left: 82%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Item</a>
+              <h3 class="box-title">ITEM LIST</h3><a href="{{url('add_item')}}" class="panel-title" style="margin-left: 80%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Item</a>
               <select class="form-control select2" style="width: 12%;" name="item_units" onchange="fetch_items(this.value);">
                            <option value="ALL">ALL</option> 
                            <option value="0">ACTIVE </option> 
@@ -63,7 +63,7 @@
                             <td>{{$s->item_rate}}</td>
                             <td>{{$s->item_tax}}</td>
                             <td>{{$s->item_dis}}</td>
-                            <td>{{$s->item_final_rate}}</td>
+                            <td>{{round($s->item_final_rate,0)}}</td>
                             <?php
                             $category_data= \App\Category::select('*')->where(['cat_id'=>$s->item_category])->first();
                         $unit_data= \App\Type::select('*')->where(['Unit_id'=>$s->item_units])->first();
@@ -84,7 +84,7 @@
 								<?php if($s->is_active==0) {?>
                                 <a href="{{ url('edit-item?item_id='.$s->item_id)}}"><span class="fa fa-edit"></span></a>
 								<?php } ?>
-                                <a href="{{ url('delete-item')}}/{{$s->item_id}}" style="color:red" class="delete"><small class="label label-{{$label}}">{{$msg}}</small></a>
+                                <button style="color:red;background-color: #f9f9f9;border: none;padding:1px;" class="delete" id='{{$s->item_id}}'><small class="label label-{{$label}}">{{$msg}}</small></button>
                             </td>
                         </tr>
                         <?php $i++;?>
@@ -103,9 +103,34 @@
 <script>
     var i=1;
 $(document).ready(function(){
-    $(".delete").on("click",function(){
-        return confirm('Are you sure to Change Status');
-    });
+    $(".delete").on("click", function () {
+        var id = this.id;
+//        alert(id);
+        swal({
+            title: "Please Conform",
+            text: "Are you sure to Change Item Status?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                 $.ajax({
+                   url: 'delete-item/' + id,
+                    type: 'get',
+                    success: function (response) {
+                         location.reload();
+                    }
+                });
+            } else {
+//                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
+                swal("Cancelled", "", "error");
+            }
+        });
+    })
     $('.select2').select2();
 });
 $(function () {

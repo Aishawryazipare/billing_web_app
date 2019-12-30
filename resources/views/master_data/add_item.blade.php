@@ -130,7 +130,7 @@
     var final_rate=(tax_value+disc_rate);
     $('#disc_rate').val(disc_rate);
     $('#tax_value').val(tax_value);
-    $('#final_rate').val(final_rate.toFixed(0));
+    $('#final_rate').val(final_rate.toFixed(2));
     
 });
 });

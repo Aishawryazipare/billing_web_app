@@ -7,7 +7,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i>  Master Data</a></li>
-        <li class="active">Add User</li>
+        <li class="active">Add Customer</li>
       </ol>
     </section>
    <section class="content">
@@ -50,7 +50,7 @@
                   </div>
                 <label class="col-sm-2 control-label">Address</label>  
                     <div class="col-sm-4">
-                    <textarea class="form-control" rows="3" placeholder="Enter Address..." name="address"></textarea>   
+                    <textarea class="form-control" rows="3" placeholder="Enter Address..." name="address" style='resize: vertical; max-width: 400px; min-width: 200px;'></textarea>   
                     </div>
                 </div>
                 

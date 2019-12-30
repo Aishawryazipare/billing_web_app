@@ -224,17 +224,131 @@ $a=0;
             </div>
           </div>
         </div>
+        
     <?php }?>
+<?php //echo json_encode($process_defect1); ?>
+   <div class="col-md-6">
+                <div id="dp_container"></div>
+            </div>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="js/highcharts.js"></script>
 <script>
 $(document).ready(function () {
 //    alert();
     $(".delete").on("click", function () {
         return confirm('Are you sure to delete user');
     });
+    Highcharts.chart('dp_container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Item Sales'
+    },
+    xAxis: {
+        categories:  <?php if(!empty($process_defect1)) { echo json_encode($process_defect1['name']); } ?>,
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Quantity'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.x}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Sell',
+        data: <?php if(!empty($process_defect1)) { echo json_encode($process_defect1['data']); } ?>
+
+    }, {
+        name: 'Total',
+        data:<?php if(!empty($process_defect1)) { echo json_encode($process_defect1['data1']); } ?>
+
+    }]
+});
+    //defects process wise
+//Highcharts.chart('dp_container', {
+//colors: ['#8bbc21','#1aadce'],
+//    chart: {
+//        type: 'column'
+//    },
+//    title: {
+//        text: 'Item Sales'
+//    },
+//    xAxis: {
+//        categories: <?php if(!empty($process_defect1)) { echo json_encode($process_defect1['name']); } ?>,
+//    },
+//    yAxis: {
+//        min: 0,
+//        title: {
+//            text: 'Total Sales'
+//        },
+//        stackLabels: {
+//            enabled: true,
+//            style: {
+//                fontWeight: 'bold',
+//                color: ( // theme
+//                    Highcharts.defaultOptions.title.style &&
+//                    Highcharts.defaultOptions.title.style.color
+//                ) || 'gray'
+//            }
+//        }
+//    },
+//    legend: {
+//        align: 'right',
+//        x: -30,
+//        verticalAlign: 'top',
+//        y: 25,
+//        floating: true,
+//        backgroundColor:
+//            Highcharts.defaultOptions.legend.backgroundColor || 'white',
+//        borderColor: '#CCC',
+//        borderWidth: 1,
+//        shadow: false
+//    },
+//    tooltip: {
+//        headerFormat: '<b>{point.x}</b><br/>',
+//        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+//    },
+//    plotOptions: {
+//        column: {
+//            stacking: 'normal',
+//            dataLabels: {
+////                enabled: true
+//            }
+//        }
+//    },
+//    series: [{
+//        name: 'Items',
+//        data: <?php if(!empty($process_defect1)) { echo json_encode($process_defect1['data']); } ?>
+//
+//    },{
+//         name: 'Sales',
+//        data: <?php if(!empty($process_defect1)) { echo json_encode($process_defect1['data1']); } ?>
+//    }],
+//    credits: {
+//                        enabled: false
+//                    },
+//});
 });
 $(function () {
     $('#example1').DataTable()
@@ -249,3 +363,4 @@ $(function () {
 })
 </script>
 @endsection
+

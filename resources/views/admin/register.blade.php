@@ -5,6 +5,9 @@
     .error{
         color:red;
     }
+    .has-feedback label~.form-control-feedback {
+    top: 3px;
+}
 </style>
 <section class="content">
     
@@ -35,7 +38,7 @@
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-          <input type="text" name="reg_address" id="reg_address" class="form-control" placeholder="Address" required>
+          <input type="text" name="reg_address" id="reg_address" class="form-control" placeholder="Address">
         <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
       </div>
       <div class="form-group">
@@ -47,7 +50,7 @@
         </label>
       </div>
       <div class="form-group has-feedback">
-          <input type="text" name="reg_username" id="reg_username" class="form-control" placeholder="Username" >
+          <input type="text" name="reg_username" id="reg_username" class="form-control" placeholder="Username" required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -131,6 +134,21 @@
                 
                 $('#btnsubmit').on('click', function() {
                     $("#orderForm").valid();
+                });
+
+		$("#reg_mobileno").focusout(function () {
+                    var email = $(this).val();
+                    $.ajax({
+                        url: 'mobile-validate/' + email,
+                        type: "GET",
+                        success: function (data) {
+                            console.log(data);
+                            $("#mobile_validate").html(data);
+                            if (data != "") {
+                                $("#reg_mobileno").val("");
+                            }
+                        }
+                    });
                 });
                 
                 $("#email").focusout(function () {
