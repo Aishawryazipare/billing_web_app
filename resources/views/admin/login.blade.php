@@ -19,13 +19,19 @@
                         <form method="POST" action="{{ url('admin-login') }}" aria-label="{{ __('Login') }}">
                             @csrf
 <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-        <input type="text" id="email" name="reg_mobileno" class="form-control" placeholder="Mobile">
+        <input type="text" id="email" name="reg_mobileno" class="form-control" placeholder="Mobile" maxlength="10">
         <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
         @if ($errors->has('reg_mobileno'))
             <span class="help-block" style='color:#dd4b39;'>
                 <strong>Mobile No. is required</strong>
             </span>
         @endif
+	  @if ($errors->has('email'))
+            <span class="help-block">
+                <strong>{{ $errors->first('email') }}</strong>
+            </span>
+        @endif
+
       </div>
       <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
         <input type="password" class="form-control" placeholder="Password" id="password" name="password">
@@ -46,6 +52,14 @@
           <a href="{{url('client-register')}}" class="btn btn-primary btn-block btn-flat">Register</a>
         </div>
         </div>
+	<br/>
+              <div class="row">
+               <div class="col-xs-12">
+          <a href="{{url('employee-login')}}" class="btn btn-primary btn-block btn-flat">User Login</a>
+        </div>
+   
+              </div>
+ 
     </form>
   </div>
 </div>

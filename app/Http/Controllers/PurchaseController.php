@@ -37,12 +37,13 @@ class PurchaseController extends Controller
             $supplier_data= \App\Supplier::select('sup_id','sup_name')->where(['is_active'=>0,'cid'=>$id])->get();
             $product_data = \App\Item::select('item_id','item_name')->where(['is_active'=>0,'cid'=>$id])->get();
             $inventory_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddSupplier.sup_name as inventorysupid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddSupplier.sup_name as inventorysupid','bil_AddItems.item_stock as item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
                      ->leftjoin('bil_AddSupplier','bil_AddSupplier.sup_id','=','bil_inventory.inventorysupid')
                      ->where(['bil_inventory.cid'=>$id])
                      ->orderby('bil_AddSupplier.sup_id','desc')
                      ->get();
+	//print_r($inventory_data);exit;
 //            $inventory_data= Inventory::leftjoin('tbl_')->select('*')->where(['cid'=>$id])->get();
         }else if(Auth::guard('web')->check()){
             $supplier_data= \App\Supplier::select('sup_id','sup_name')->get();
@@ -72,7 +73,7 @@ class PurchaseController extends Controller
                 $product_data = \App\Item::select('item_id','item_name')->where(['is_active'=>0,'cid'=>$cid,'lid'=>$lid])->get();
                 $supplier_data= \App\Supplier::select('sup_id','sup_name')->where(['is_active'=>0,'cid'=>$cid,'lid'=>$lid])->get();
                  $inventory_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddSupplier.sup_name as inventorysupid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddSupplier.sup_name as inventorysupid','bil_AddItems.item_stock as item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
                      ->leftjoin('bil_AddSupplier','bil_AddSupplier.sup_id','=','bil_inventory.inventorysupid')
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.lid'=>$lid])
@@ -85,7 +86,7 @@ class PurchaseController extends Controller
                 $product_data = \App\Item::select('item_id','item_name')->where(['is_active'=>0,'cid'=>$cid,'lid'=>$lid])->get();
                 $supplier_data= \App\Supplier::select('sup_id','sup_name')->where(['is_active'=>0,'cid'=>$cid,'lid'=>$lid])->get();
                  $inventory_data = DB::table('bil_inventory')
-                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddSupplier.sup_name as inventorysupid')
+                     ->select('bil_inventory.*','bil_AddItems.item_name as inventoryitemid','bil_AddSupplier.sup_name as inventorysupid','bil_AddItems.item_stock as item_stock')
                      ->leftjoin('bil_AddItems','bil_AddItems.item_id','=','bil_inventory.inventoryitemid')
                      ->leftjoin('bil_AddSupplier','bil_AddSupplier.sup_id','=','bil_inventory.inventorysupid')
                      ->where(['bil_inventory.cid'=>$cid,'bil_inventory.lid'=>$lid])

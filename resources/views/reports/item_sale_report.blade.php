@@ -2,7 +2,8 @@
 @section('title', 'Item Sales Report')
 @section('content')
 <style>
-    @media screen and (max-device-width:640px), screen and (max-width:640px) {
+    @media screen and (max-device-width:640px),
+    screen and (max-width:640px) {
         .mobile_date {
             Width: 60px;
         }
@@ -32,7 +33,8 @@
                 <div class="box-header">
                     <h3 class="box-title"></h3>
                 </div>
-                <form class="form-horizontal" id="userForm" method="post" action="{{ url('download_item_sale_report') }}">
+                <form class="form-horizontal" id="userForm" method="post"
+                    action="{{ url('download_item_sale_report') }}">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <input type="hidden" name="en_id" id="en_id" value="" />
@@ -43,7 +45,10 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar calendar1"></i>
                                     </div>
-                                    <input type="text" name="from_date" class="form-control mobile_date datepicker from_date"style="background-color: #ffffff;" id="from_date" autocomplete="off" value="<?php echo date('Y-m-d');?>" required/>
+                                    <input type="text" name="from_date"
+                                        class="form-control mobile_date datepicker from_date"
+                                        style="background-color: #ffffff;" id="from_date" autocomplete="off"
+                                        value="<?php echo date('Y-m-d');?>" required />
                                 </div>
                             </div>
                             <label for="lbl_cat_name" class="col-sm-2 control-label">To Date</label>
@@ -52,61 +57,66 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar calendar2"></i>
                                     </div>
-                                    <input type="text" name="to_date" class="form-control mobile_date datepicker to_date"  style="background-color: #ffffff;" autocomplete="off" value="<?php echo date('Y-m-d');?>"/>
+                                    <input type="text" name="to_date"
+                                        class="form-control mobile_date datepicker to_date"
+                                        style="background-color: #ffffff;" autocomplete="off"
+                                        value="<?php echo date('Y-m-d');?>" />
                                 </div>
                             </div>
                         </div>
-                         <div class="form-group">
-                        <?php if ($location_data != '') { ?>
-                                <label for="lbl_cat_name" class="col-sm-2 control-label">Location</label>
-                                <div class="col-sm-4">
-                                    <select class="form-control select2" style="width: 100%;" name="location" id="location">
-                                        <option value="">-- Select Location -- </option> 
-                                        <option value="all">All</option> 
-                                        @foreach($location_data as $u)
-                                        <option value="{{$u->loc_id}}">{{$u->loc_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>   
-                        <?php } ?>
-                                  <?php if($employee_data!=''){ ?>
-                                        <label for="lbl_cat_name" class="col-sm-2 control-label">Employee</label>
-                        <div class="col-sm-4">
-                  <select class="form-control select2" style="width: 100%;" name="employee" id="employee">
-                         <option value="">-- Select Employee -- </option> 
-                        @foreach($employee_data as $u)
-                        <option value="{{$u->id}}">{{$u->name}}</option>
-                        @endforeach
-                    </select>
-                        </div>  
-                          <?php } ?>
-                                                </div>
+                        <div class="form-group">
+                            <?php if ($location_data != '') { ?>
+                            <label for="lbl_cat_name" class="col-sm-2 control-label">Location</label>
+                            <div class="col-sm-4">
+                                <select class="form-control select2" style="width: 100%;" name="location" id="location">
+                                    <option value="">-- Select Location -- </option>
+                                    <option value="all">All</option>
+                                    @foreach($location_data as $u)
+                                    <option value="{{$u->loc_id}}">{{$u->loc_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <?php } ?>
+                            <?php if($employee_data!=''){ ?>
+                            <label for="lbl_cat_name" class="col-sm-2 control-label">Employee</label>
+                            <div class="col-sm-4">
+                                <select class="form-control select2" style="width: 100%;" name="employee" id="employee">
+                                    <option value="">-- Select Employee -- </option>
+                                    @foreach($employee_data as $u)
+                                    <option value="{{$u->id}}">{{$u->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <?php } ?>
+                        </div>
                     </div>
                     <div class="box-footer">
-                        <button type="button"  id="btnsubmit" class="btn btn-success"><i class="fa fa-fw fa-eye"></i>View</button>
-                        <button type="submit"  id="download" class="btn btn-primary"><i class="fa fa-fw fa-download"></i>Download</button>
-                        <a href="{{url('item_sale_report')}}" class="btn btn-danger" >Cancel</a>
+                        <button type="button" id="btnsubmit" class="btn btn-success"><i
+                                class="fa fa-fw fa-eye"></i>View</button>
+                        <button type="submit" id="download" class="btn btn-primary"><i
+                                class="fa fa-fw fa-download"></i>Download</button>
+                        <a href="{{url('item_sale_report')}}" class="btn btn-danger">Cancel</a>
                     </div>
                 </form>
             </div>
-        </div>   
+        </div>
     </div>
     <div class="row result" style="display:none;">
         <div class="col-md-12">
             <div class="box">
-                 <span id="amt"></span>
+                <span id="amt"></span>
                 <div class="box-body" style="overflow-x:auto;">
                     <table id="example1" class="table table-bordered table-striped" border="1">
                         <thead>
                             <tr>
                                 <th style="width:20px;">Sr.No</th>
                                 <th style="width:20px;">ICode</th>
-								<th>Date</th>
+                                <th>Date</th>
                                 <th>Item Name</th>
                                 <th>Item Qty</th>
-                                <th  style="width:20px;">Rate</th>
-                                <th  style="width:20px;">Amount</th>
-                                
+                                <th style="width:20px;">Rate</th>
+                                <th style="width:20px;">Amount</th>
+
                             </tr>
                         </thead>
                         <tbody id="table_data">
@@ -126,7 +136,7 @@
 <script type='text/javascript' src='js/jquery.validate.js'></script>
 <script src="js/sweetalert.min.js"></script>
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
     var i=1;
     $('.select2').select2();
     $('#example1').DataTable();
@@ -146,6 +156,8 @@ $(document).ready(function () {
     $('.datepicker-autoclose').datepicker();
      var fullDate = new Date();
     var month = fullDate.getMonth() + 1;
+    var dataTable=$('#example1').DataTable();
+        dataTable.clear();
     var currentDate = fullDate.getFullYear() + "-" + month + "-" + fullDate.getDate();
      $.ajax({
                             url: 'item_sale_report',
@@ -156,9 +168,9 @@ $(document).ready(function () {
                       var a=JSON.parse(data);
                       var result=a.other_data;
                      $('#amt').html("<h3>Total Amount: "+a.amount+"</h3>");
-                                              var table = $('#example1').DataTable();
-table.clear().draw();
-     i=1;  
+                         var table = $('#example1').DataTable();
+                    table.clear().draw();
+                     i =1;  
          table = $('#example1').DataTable();    
          if(data!='') {               
           for (var key=0, size=result.length; key<size; key++){
@@ -170,8 +182,8 @@ table.clear().draw();
 				r[++j] ='<tr><td>'+result[key].date+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].item_name+'</td></tr>';
                 r[++j] ='<tr><td>'+result[key].item_qty+'</td></tr>';
-                r[++j] ='<tr><td>'+result[key].item_rate+'</td></tr>';
-                r[++j] ='<tr><td>'+result[key].item_totalrate+'</td></tr>';
+                r[++j] ='<tr><td>'+result[key].item_rate.toFixed(2)+'</td></tr>';
+                r[++j] ='<tr><td>'+result[key].item_totalrate.toFixed(2)+'</td></tr>';
                 rowNode = table.row.add(r);
                 i++;
 
@@ -201,7 +213,8 @@ table.clear().draw();
                       var result=a.other_data;
                      $('#amt').html("<h3>Total Amount: "+a.amount+"</h3>");
                     var table;
-         table = $('#example1').DataTable();    
+         table = $('#example1').DataTable();
+        table.clear();    
          if(data!='') {               
           for (var key=0, size=result.length; key<size; key++){
             var j = -1;

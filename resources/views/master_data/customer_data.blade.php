@@ -23,7 +23,7 @@
   <section class="content">
    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">CUSTOMER LIST</h3><a href="{{url('add_customer')}}" class="panel-title" style="margin-left: 73%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Customer</a>
+           <h3 class="box-title">&nbsp;&nbsp;</h3><a href="{{url('add_customer')}}" class="panel-title" style="margin-left: 85%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Customer</a> 
             </div>
             <!-- /.box-header -->
              <?php $x = 1; ?>
@@ -71,8 +71,8 @@ $(document).ready(function(){
         var id = this.id;
 //        alert(id);
         swal({
-            title: "Please Conform",
-            text: "You want to Delete Customer?",
+            title: "Please Confirm",
+            text: "You want to Delete Customer ?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#e74c3c",
@@ -82,16 +82,20 @@ $(document).ready(function(){
             closeOnCancel: false,
         }, function (isConfirm) {
             if (isConfirm) {
-                 $.ajax({
-                   url: 'delete-customer/' + id,
+                $.ajax({
+                    url: 'delete-customer/' + id,
                     type: 'get',
                     success: function (response) {
-                         location.reload();
+                        swal({ type: "success", title: "Done!", confirmButtonColor: "#292929", text: "Customer Deleted Successfully", confirmButtonText: "Ok" }, 
+                                function() {
+                                    location.reload();
+                                });
                     }
                 });
-            } else {
+            }else {
 //                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
-                swal("Cancelled", "", "error");
+                // swal("Cancelled", "", "error");
+                location.reload();
             }
         });
     })

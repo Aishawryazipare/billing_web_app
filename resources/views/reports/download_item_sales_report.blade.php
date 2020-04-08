@@ -31,7 +31,6 @@
             <td></td>
             <td></td>
             <td style="text-align:center;">{{$total_cash}}</td>
-            <td></td>
             <td style="text-align:center;">{{$total_amt}}</td>
         </tr>
         

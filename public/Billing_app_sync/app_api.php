@@ -6,7 +6,7 @@ include 'config.php';
 echo"Success";
 }
 $json_array = $_POST['json_array'];
-$data=json_decode($json_array, true); 
+$data=json_decode($json_array, true);
 //print_r($data); //exit;
 foreach($data as $s)
 {		
@@ -20,7 +20,7 @@ foreach($data as $s)
 			$gst_setting = $s['gst_setting'];
 			$bill_totalamt = $s['bill_totalamt'];
 			$bill_tax = $s['bill_tax'];
-			$is_active = 0;
+			$is_active = $s['isactive'];
 			$lid = $s['lid'];
 			$cid = $s['cid'];
 			$emp_id = $s['emp_id'];
@@ -29,6 +29,7 @@ foreach($data as $s)
 			$payment_details = $s['payment_details'];
 			$order_details = $s['order_details'];
 			$bill_code = $s['bill_code'];
+			$remark = $s['remark'];
 			
 			if($disount=='')
 			$discount=0;
@@ -37,9 +38,17 @@ foreach($data as $s)
 			$bill_tax=0;
 
 			if($lid == 'null'){
-				$Sql_Query = "insert into bil_AddBillMaster (app_bill_id,bill_date,cust_name,cash_or_credit,point_of_contact,discount,gst_setting,bill_totalamt,bill_tax,payment_details,order_details,isactive,cid,emp_id,android_bill_id,bill_code)values ('$app_bill_id','$bill_date','$cust_id','$cash_or_creadit','$point_of_contact','$discount','$gst_setting','$bill_totalamt','$bill_tax','$payment_details','$order_details','$is_active','$cid','$emp_id','$android_bill_id','$bill_code')ON DUPLICATE KEY UPDATE android_bill_id='$android_bill_id',app_bill_id='$app_bill_id',bill_date='$bill_date',cust_name='$cust_id',cash_or_credit='$cash_or_creadit',point_of_contact='$point_of_contact',discount='$discount',gst_setting='$gst_setting',bill_totalamt='$bill_totalamt',bill_tax='$bill_tax',payment_details='$payment_details',order_details='$order_details',isactive='$is_active',cid='$cid',emp_id='$emp_id',bill_code='$bill_code'";
+				if($point_of_contact=='0'){
+					$Sql_Query = "insert into bil_AddBillMaster (app_bill_id,bill_date,cust_name,cash_or_credit,discount,gst_setting,bill_totalamt,bill_tax,payment_details,order_details,isactive,cid,emp_id,android_bill_id,bill_code,remark)values ('$app_bill_id','$bill_date','$cust_id','$cash_or_creadit','$discount','$gst_setting','$bill_totalamt','$bill_tax','$payment_details','$order_details','$is_active','$cid','$emp_id','$android_bill_id','$bill_code','$remark')ON DUPLICATE KEY UPDATE android_bill_id='$android_bill_id',app_bill_id='$app_bill_id',bill_date='$bill_date',cust_name='$cust_id',cash_or_credit='$cash_or_creadit',discount='$discount',gst_setting='$gst_setting',bill_totalamt='$bill_totalamt',bill_tax='$bill_tax',payment_details='$payment_details',order_details='$order_details',isactive='$is_active',cid='$cid',emp_id='$emp_id',bill_code='$bill_code',remark='$remark'";
+				}else{
+					$Sql_Query = "insert into bil_AddBillMaster (app_bill_id,bill_date,cust_name,cash_or_credit,point_of_contact,discount,gst_setting,bill_totalamt,bill_tax,payment_details,order_details,isactive,cid,emp_id,android_bill_id,bill_code,remark)values ('$app_bill_id','$bill_date','$cust_id','$cash_or_creadit','$point_of_contact','$discount','$gst_setting','$bill_totalamt','$bill_tax','$payment_details','$order_details','$is_active','$cid','$emp_id','$android_bill_id','$bill_code','$remark')ON DUPLICATE KEY UPDATE android_bill_id='$android_bill_id',app_bill_id='$app_bill_id',bill_date='$bill_date',cust_name='$cust_id',cash_or_credit='$cash_or_creadit',point_of_contact='$point_of_contact',discount='$discount',gst_setting='$gst_setting',bill_totalamt='$bill_totalamt',bill_tax='$bill_tax',payment_details='$payment_details',order_details='$order_details',isactive='$is_active',cid='$cid',emp_id='$emp_id',bill_code='$bill_code',remark='$remark'";
+				}
 			}else{
-				$Sql_Query = "insert into bil_AddBillMaster (app_bill_id,bill_date,cust_name,cash_or_credit,point_of_contact,discount,gst_setting,bill_totalamt,bill_tax,payment_details,order_details,isactive,lid,cid,emp_id,android_bill_id,bill_code)values ('$app_bill_id','$bill_date','$cust_id','$cash_or_creadit','$point_of_contact','$discount','$gst_Setting','$bill_totalamt','$bill_tax','$payment_details','$order_details','$is_active','$lid','$cid','$emp_id','$android_bill_id','$bill_code')ON DUPLICATE KEY UPDATE android_bill_id='$android_bill_id',app_bill_id='$app_bill_id',bill_date='$bill_date',cust_name='$cust_id',cash_or_credit='$cash_or_creadit',point_of_contact='$point_of_contact',discount='$discount',gst_setting='$gst_setting',bill_totalamt='$bill_totalamt',bill_tax='$bill_tax',payment_details='$payment_details',order_details='$order_details',isactive='$is_active',lid='$lid',cid='$cid',emp_id='$emp_id',bill_code='$bill_code'";
+				if($point_of_contact=='0'){
+					$Sql_Query = "insert into bil_AddBillMaster (app_bill_id,bill_date,cust_name,cash_or_credit,discount,gst_setting,bill_totalamt,bill_tax,payment_details,order_details,isactive,lid,cid,emp_id,android_bill_id,bill_code,remark)values ('$app_bill_id','$bill_date','$cust_id','$cash_or_creadit','$discount','$gst_Setting','$bill_totalamt','$bill_tax','$payment_details','$order_details','$is_active','$lid','$cid','$emp_id','$android_bill_id','$bill_code','$remark')ON DUPLICATE KEY UPDATE android_bill_id='$android_bill_id',app_bill_id='$app_bill_id',bill_date='$bill_date',cust_name='$cust_id',cash_or_credit='$cash_or_creadit',discount='$discount',gst_setting='$gst_setting',bill_totalamt='$bill_totalamt',bill_tax='$bill_tax',payment_details='$payment_details',order_details='$order_details',isactive='$is_active',lid='$lid',cid='$cid',emp_id='$emp_id',bill_code='$bill_code',remark='$remark'";
+				}else{
+					$Sql_Query = "insert into bil_AddBillMaster (app_bill_id,bill_date,cust_name,cash_or_credit,point_of_contact,discount,gst_setting,bill_totalamt,bill_tax,payment_details,order_details,isactive,lid,cid,emp_id,android_bill_id,bill_code,remark)values ('$app_bill_id','$bill_date','$cust_id','$cash_or_creadit','$point_of_contact','$discount','$gst_Setting','$bill_totalamt','$bill_tax','$payment_details','$order_details','$is_active','$lid','$cid','$emp_id','$android_bill_id','$bill_code','$remark')ON DUPLICATE KEY UPDATE android_bill_id='$android_bill_id',app_bill_id='$app_bill_id',bill_date='$bill_date',cust_name='$cust_id',cash_or_credit='$cash_or_creadit',point_of_contact='$point_of_contact',discount='$discount',gst_setting='$gst_setting',bill_totalamt='$bill_totalamt',bill_tax='$bill_tax',payment_details='$payment_details',order_details='$order_details',isactive='$is_active',lid='$lid',cid='$cid',emp_id='$emp_id',bill_code='$bill_code',remark='$remark'";
+				}
 			}
 		//	echo $Sql_Query;
 	}
@@ -48,10 +57,12 @@ foreach($data as $s)
 	}
  else{
 
-	echo 'Try Again';
+	//echo 'Try Again';
 	echo "ERROR: Could not able to execute $Sql_Query. " . mysqli_error($con);
  
  }	
+ 
+
 // echo 'Data Synced Successfully';
 }
 ?>

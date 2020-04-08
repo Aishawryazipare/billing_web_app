@@ -2,7 +2,7 @@
     <div class="pull-right hidden-xs">
 <!--      <b>Version</b> 2.4.13-->
     </div>
-    <strong>iPing Data Labs &copy; 2019</strong>
+    <strong>iPing Data Labs &copy; <?php echo date("Y"); ?></strong>
 </footer>
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

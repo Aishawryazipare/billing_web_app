@@ -36,7 +36,12 @@ class PaymentController extends Controller
          
           $employee_data= \App\PointOfContact::select('*')->where(['cid'=>$cid,'is_active'=>0])->get();
 //          echo "<pre/>";print_r();exit;
-        }
+	}
+	if(Auth::guard('employee')->check()){
+		$cid = $this->employee->cid;
+		$lid = $this->employee->lid;
+		$employee_data= \App\PointOfContact::select('*')->where(['cid'=>$cid,'lid'=>$lid,'is_active'=>0])->get();
+	}
         return view('reports.payment.poc_report',['location_data'=>$location_data,'employee_data'=>$employee_data]);
     }
     public function fetchPointOfContact(Request $request)
@@ -217,7 +222,7 @@ class PaymentController extends Controller
              if(!empty($customer_data))
               $result_data['cust_name']=$customer_data->cust_name;
              else
-               $result_data['cust_name']='';
+               $result_data['cust_name']=$data->cust_name;
             
              $result_data['bill_totalamt']=$data->bill_totalamt;
              $result_data['cash_or_credit']=$data->cash_or_credit;
@@ -615,7 +620,7 @@ class PaymentController extends Controller
              if(!empty($customer_data))
               $result_data['cust_name']=$customer_data->cust_name;
              else
-               $result_data['cust_name']='';
+               $result_data['cust_name']=$data->cust_name;
             
              $result_data['bill_totalamt']=$data->bill_totalamt;
              $result_data['cash_or_credit']=$data->cash_or_credit;

@@ -64,7 +64,7 @@
                     <div class="form-group">
                         <label for="lbl_cat_desc" class="col-sm-2 control-label">Quantity<span style="color:#ff0000;">*</span></label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control rate_cal" id="inventoryitemquantity" placeholder="Quantity" name="inventoryitemquantity" required>
+                            <input type="text" class="form-control rate_cal number" id="inventoryitemquantity" placeholder="Quantity" name="inventoryitemquantity" required>
                         </div>
                     </div>
                    
@@ -96,7 +96,8 @@
                   <th style="width:50px;">Sr.No</th>
                   <th>Supplier Name</th>
                   <th>Item</th>
-                  <th>Quantity</th>
+                  <th>Today Quantity</th>
+		  <th>Total Quantity</th>
                   <th>Status</th>
                 </tr>
                 </thead>
@@ -108,8 +109,9 @@
                     <td>{{$in->inventorysupid}}</td>
                     <td>{{$in->inventoryitemid}}</td>
                     <td>{{$in->inventoryitemquantity}}</td>
+		    <td>{{abs($in->item_stock)}}</td>
                     <td>{{$in->inventorystatus}}</td>
-
+              
                 </tr>
                     
                 <?php $a++;?>
@@ -130,6 +132,66 @@
 <script src="js/sweetalert.min.js"></script>
 <script>
 $(document).ready(function(){
+ $('.number').keypress(function(event) {
+                    var $this = $(this);
+                    if ((event.which != 46 || $this.val().indexOf('.') != - 1) &&
+                            ((event.which < 48 || event.which > 57) &&
+                                    (event.which != 0 && event.which != 8))) {
+                    event.preventDefault();
+                    }
+
+                    var text = $(this).val();
+                    if ((event.which == 46) && (text.indexOf('.') == - 1)) {
+                    setTimeout(function() {
+                    if ($this.val().substring($this.val().indexOf('.')).length > 3) {
+                    $this.val($this.val().substring(0, $this.val().indexOf('.') + 3));
+                    }
+                    }, 1);
+                    }
+
+                    if ((text.indexOf('.') != - 1) &&
+                            (text.substring(text.indexOf('.')).length > 2) &&
+                            (event.which != 0 && event.which != 8) &&
+                            ($(this)[0].selectionStart >= text.length - 2)) {
+                    event.preventDefault();
+                    }
+                    });
+                         $('.number3').keypress(function(event) {
+                    var $this = $(this);
+                    if ((event.which != 46 || $this.val().indexOf('.') != - 1) &&
+                            ((event.which < 48 || event.which > 57) &&
+                                    (event.which != 0 && event.which != 8))) {
+                    event.preventDefault();
+                    }
+
+                    var text = $(this).val();
+                    if ((event.which == 46) && (text.indexOf('.') == - 1)) {
+                    setTimeout(function() {
+                    if ($this.val().substring($this.val().indexOf('.')).length > 3) {
+                    $this.val($this.val().substring(0, $this.val().indexOf('.') + 3));
+                    }
+                    }, 1);
+                    }
+
+                    if ((text.indexOf('.') != - 1) &&
+                            (text.substring(text.indexOf('.')).length > 5) &&
+                            (event.which != 0 && event.which != 8) &&
+                            ($(this)[0].selectionStart >= text.length - 2)) {
+                    event.preventDefault();
+                    }
+                    });
+                    $('.number').bind("paste", function(e) {
+                    var text = e.originalEvent.clipboardData.getData('Text');
+                    if ($.isNumeric(text)) {
+                    if ((text.substring(text.indexOf('.')).length > 3) && (text.indexOf('.') > - 1)) {
+                    e.preventDefault();
+                    $(this).val(text.substring(0, text.indexOf('.') + 3));
+                    }
+                    }
+                    else {
+                    e.preventDefault();
+                    }
+                    });
     $('.select2').select2() 
     $('#example1').DataTable();
     $( "#sync_btn" ).click(function() {

@@ -22,6 +22,8 @@ include 'config.php';
 		$data['cid']=$obj->cid;
 		$data['emp_id']=$obj->id;
 		$data['employee_code']=$obj->employee_code;
+		$data['login_active']=$obj->login_active;
+		$data['token']=$obj->token;
 	}
 	$data['status']="success";
  

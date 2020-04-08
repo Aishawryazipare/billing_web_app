@@ -1,5 +1,13 @@
 <?php
-require 'db_config.php';
+//require 'db_config.php';
+$hostname = "localhost";
+$dbusername = "ipinguser";
+$dbpassword = "iPing@321";
+$dbname = "billing_app";
+
+
+$con = mysqli_connect($hostname,$dbusername,$dbpassword,$dbname); 
+
 date_default_timezone_set('Asia/Kolkata');
 $now = new DateTime();
 

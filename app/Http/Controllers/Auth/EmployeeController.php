@@ -110,7 +110,7 @@ class EmployeeController extends Controller
             'mobile_no' => 'required',
             'password' => 'required',
         ]);
-        if (auth()->guard('employee')->attempt(['mobile_no' => $request->mobile_no, 'password' => $request->password], $request->get('remember'))) {
+        if (auth()->guard('employee')->attempt(['mobile_no' => $request->mobile_no, 'password' => $request->password,'login_active' => 0], $request->get('remember'))) {
            // $minutes = 1;
 //            $minutes = 6*30*24*3600;
 //            Cookie::queue('mobile_no', $request->mobile_no , $minutes);
@@ -118,6 +118,9 @@ class EmployeeController extends Controller
 //            $response = new Response('Hello World');
 //            $response->withCookie(cookie('mobile_no', $request->mobile_no , $minutes));
 //            $response->withCookie(cookie('password', $request->password , $minutes));
+		    $employee_data=$user = \Auth::guard('employee')->user();
+         $users = \App\Employee::findorfail($employee_data->id);
+        $users->update(['login_active'=>1]);
             return redirect('employee-home');
         }
         return back()->withErrors(['email' => 'Email or password are wrong.']);
@@ -126,6 +129,9 @@ class EmployeeController extends Controller
     
     public function logout(Request $request)
     {
+	    $employee_data=$user = \Auth::guard('employee')->user();
+         $users = \App\Employee::findorfail($employee_data->id);
+        $users->update(['login_active'=>0]);
         auth()->guard('employee')->logout();
         $request->session()->flush();
         $request->session()->regenerate();

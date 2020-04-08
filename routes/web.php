@@ -61,6 +61,8 @@ Route::get('user-list','UserController@userList');
 Route::get('edit-user','UserController@userEdit');
 Route::put('update-user/{id}','UserController@updateUser');
 Route::get('delete-user/{id}','UserController@deletUser');
+Route::get('deactivate-user/{id}', 'UserController@deactivateUser');
+Route::get('activate-user/{id}', 'UserController@activateUser');
 
 Route::get('/home', 'ClientController@index');
 //Route::post('/login' , 'Auth\AuthController@authenticate');
@@ -245,6 +247,11 @@ Route::post('download_bill_tax_report','TaxController@downloadTaxBill');
 Route::get('bill_detail_report','TaxController@getBillDetail');
 Route::post('bill_detail_report','TaxController@fetchBillDetail');
 Route::post('download_bill_detail_report','TaxController@downloadBillDetail');
+//Bill Print report
+Route::get('bill_print_report','TaxController@getBillPrint');
+Route::post('bill_print_report','TaxController@fetchBillPrint');
+Route::post('download_bill_print_report','TaxController@downloadBillPrint');
+
 //Tax Bill report
 Route::get('tax_slab_report','TaxController@getTaxSlab');
 Route::post('tax_slab_report','TaxController@fetchTaxSlab');

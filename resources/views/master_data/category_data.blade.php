@@ -28,7 +28,7 @@
 			<?php } ?>
                           <a href="{{url('add_category')}}" class="panel-title" style="margin-left: 0%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Category</a>
              <br/>
-             <h3 class="box-title">CATEGORY LIST</h3>
+             <h3 class="box-title"></h3>
             </div>
             <!-- /.box-header -->
              <?php $x = 1; ?>
@@ -72,8 +72,36 @@ $(document).ready(function(){
 //    });
     $(".delete").on("click", function () {
         var id = this.id;
-//        alert(id);
         swal({
+            title: "Please Confirm",
+            text: "You want to Delete Category ?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: 'delete-category/' + id,
+                    type: 'get',
+                    success: function (response) {
+                        swal({ type: "success", title: "Done!", confirmButtonColor: "#292929", text: "Category Deleted Successfully", confirmButtonText: "Ok" }, 
+                                function() {
+                                    location.reload();
+                                });
+                    }
+                });
+            }else {
+//                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
+                // swal("Cancelled", "", "error");
+                location.reload();
+            }
+        });
+
+       /* swal({
             title: "Please Conform",
             text: "You want to Delete Category ?",
             type: "warning",
@@ -96,7 +124,8 @@ $(document).ready(function(){
 //                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
                 swal("Cancelled", "", "error");
             }
-        });
+        });*/
+
     })
 $( "#sync_btn" ).click(function() {
         var msg="Master Data";

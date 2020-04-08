@@ -43,6 +43,8 @@ if ($result=mysqli_query($con,$sql))
 		$flag['multiple_print']=$obj->multiple_print;
 		$flag['reset_bill']=$obj->reset_bill;
 		$flag['sync_flag']=$obj->sync_flag;
+		$flag['point_of_contact']=$obj->point_of_contact;
+		$flag['payment_method']=$obj->payment_method;
 		array_push($new_arr,$flag);
     }
   // Free result set

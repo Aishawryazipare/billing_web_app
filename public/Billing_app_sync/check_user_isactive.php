@@ -7,8 +7,9 @@ include 'config.php';
 //echo"Success";
 }
  $empid = $_POST['empid'];
- $Sql_Query = "select is_active from bil_employees where id='$empid'";
+ $Sql_Query = "select is_active,login_active from bil_employees where id='$empid'";
  $isactive=0;
+ $login_active=0;
 $new_arr=array();
  $result=mysqli_query($con,$Sql_Query);
  $rowcount=mysqli_num_rows($result);
@@ -24,6 +25,7 @@ $new_arr=array();
 	}else{
 		$data['is_active']=1;
 	}
+
 	array_push($new_arr,$data);
  }
  else{

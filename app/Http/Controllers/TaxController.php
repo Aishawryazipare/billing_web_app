@@ -34,7 +34,7 @@ class TaxController extends Controller
                $location_data= \App\EnquiryLocation::select('*')->where(['cid'=>$cid])->get();
           }
          
-          $employee_data= \App\Employee::select('*')->where(['cid'=>$cid])->get();
+          $employee_data= \App\Employee::select('*')->where(['cid'=>$cid,'is_active'=>'0'])->get();
 //          echo "<pre/>";print_r();exit;
         }
         return view('reports.tax_bill_report',['location_data'=>$location_data,'employee_data'=>$employee_data]);
@@ -419,11 +419,145 @@ class TaxController extends Controller
                $location_data= \App\EnquiryLocation::select('*')->where(['cid'=>$cid])->get();
           }
          
-          $employee_data= \App\Employee::select('*')->where(['cid'=>$cid])->get();
+          $employee_data= \App\Employee::select('*')->where(['cid'=>$cid,'is_active'=>'0'])->get();
         }
         return view('reports.tax.bill_detail_report',['location_data'=>$location_data,'employee_data'=>$employee_data]);
     }
+    public function getBillPrint()
+    {
+         $location_data=$employee_data='';
+        if(Auth::guard('admin')->check()){
+          $cid = $this->admin->rid;   
+          if($this->admin->location=="multiple")
+          {
+               $location_data= \App\EnquiryLocation::select('*')->where(['cid'=>$cid])->get();
+          }
+         
+          $employee_data= \App\Employee::select('*')->where(['cid'=>$cid,'is_active'=>'0'])->get();
+        }
+        return view('reports.tax.bill_print_report',['location_data'=>$location_data,'employee_data'=>$employee_data]);
+    }
+       public function DownloadBillPrint(Request $request)
+    {
+         $requestData = $request->all();
+        $from_date = $requestData["from_date"];
+        if(!empty($requestData["to_date"]))
+         $to_date = $requestData["to_date"];
+        else
+          $to_date = $from_date;
+        
+         $from_date = date($from_date . ' 00:00:00', time());
+         $to_date   = date($to_date . ' 23:59:00', time());
+         
+         if(Auth::guard('admin')->check()){
+            $cid = $this->admin->rid;
+               if(isset($requestData['location']))
+              {
+                 
+                  $lid=$requestData['location'];
+                 //  echo $lid;exit;
+                  if($lid=="all")
+                  {
+                      if(isset($requestData['employee']))
+                      {
+                         $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                     ->where(['cid'=>$cid,'emp_id'=>$requestData['employee'],'isactive'=>0])
+                     ->get();
+                      }
+                      else
+                      {
+                       $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                    ->where(['cid'=>$cid,'isactive'=>0])
+                     ->get();
+                      }
+                      
+                  }
+                  else {
+                      $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                    ->where(['cid'=>$cid,'lid'=>$lid,'isactive'=>0])
+                     ->get();
+                  }
+              }
+              else
+              {
+            if(isset($requestData['employee']))
+                  {
+                         $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+             ->where(['cid'=>$cid,'emp_id'=>$requestData['employee'],'isactive'=>0])
+                     ->get();
+                  }
+                  else{
+                  $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                     ->where(['bil_AddBillMaster.cid'=>$cid,'isactive'=>0])
+                     ->get();
+                  }
+              }
+        }else if(Auth::guard('web')->check()){
+            $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                    ->get();
+        }
+        else if(Auth::guard('employee')->check()){
+           $cid = $this->employee->cid;
+            $lid = $this->employee->lid;
+            $emp_id = $this->employee->id;
+            $role = $this->employee->role;
+            $sub_emp_id = $this->employee->sub_emp_id;
+            $client_data = \App\Admin::select('location')->where(['rid'=>$cid])->first();
+//            echo $client_data->location."&".$role;exit;
+            if($client_data->location == "single" && $role == 2)
+            {
+                $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                    ->where(['cid'=>$cid,'isactive'=>0])
+                     ->get();
+            }
+             else if($client_data->location == "multiple" && $role == 2)
+            {
+                 if($sub_emp_id != "")
+                {
+                     $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                     ->where(['cid'=>$cid,'lid'=>$lid,'isactive'=>0])
+                     ->get();
+                 }
+                 else
+                 {
+                 $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                      ->where(['cid'=>$cid,'lid'=>$lid,'isactive'=>0])
+                     ->get();
+                 }
+             }
+             else if($client_data->location == "multiple" && $role == 1)
+                {
+                  $bill_data = DB::table('bil_AddBillMaster')
+                     ->select('bil_AddBillMaster.*')
+                     ->whereBetween('bil_AddBillMaster.bill_date', [$from_date, $to_date])
+                     ->where(['cid'=>$cid,'lid'=>$lid,'isactive'=>0])
+                     ->get();
+             }
     
+            
+        }  
+         //echo "<pre/>";print_r($bill_data);exit;
+         
+         return view('reports.tax.download_print_report',['bill_data'=>$bill_data,'cid'=>$cid,'from_date'=>$requestData['from_date'],'to_date'=>$requestData['to_date']]);
+    }   
     public function fetchInventory(Request $request)
     {
         $requestData = $request->all();

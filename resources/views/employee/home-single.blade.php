@@ -90,7 +90,7 @@ $a=0;
 
       <div class="info-box-content">
         <span class="info-box-text"><b style="font-size:17px;">Bills</b></span>
-        <span class="info-box-number" style="font-size:17px;">{{@$total_sales}}</span>
+        <span class="info-box-number" style="font-size:17px;">{{count(@$total_sales)}}</span>
       </div>
     </div>    
                     </div>

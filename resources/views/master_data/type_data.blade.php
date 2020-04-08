@@ -23,7 +23,7 @@
   <section class="content">
    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Unit LIST</h3><a href="{{url('add_type')}}" class="panel-title" style="margin-left: 82%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Unit</a>
+              <h3 class="box-title">&nbsp;</h3><a href="{{url('add_type')}}" class="panel-title" style="margin-left: 87%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Unit</a>
             </div>
             <!-- /.box-header -->
              <?php $x = 1; ?>
@@ -66,9 +66,9 @@ $(document).ready(function(){
     $(".delete").on("click", function () {
         var id = this.id;
 //        alert(id);
-        swal({
-            title: "Please Conform",
-            text: "You want to Delete Unit?",
+    swal({
+            title: "Please Confirm",
+            text: "You want to Delete Unit ?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#e74c3c",
@@ -78,16 +78,20 @@ $(document).ready(function(){
             closeOnCancel: false,
         }, function (isConfirm) {
             if (isConfirm) {
-                 $.ajax({
-                   url: 'delete-type/' + id,
+                $.ajax({
+                    url: 'delete-type/' + id,
                     type: 'get',
                     success: function (response) {
-                         location.reload();
+                        swal({ type: "success", title: "Done!", confirmButtonColor: "#292929", text: "Unit Deleted Successfully", confirmButtonText: "Ok" }, 
+                                function() {
+                                    location.reload();
+                                });
                     }
                 });
-            } else {
+            }else {
 //                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
-                swal("Cancelled", "", "error");
+                // swal("Cancelled", "", "error");
+                location.reload();
             }
         });
     })

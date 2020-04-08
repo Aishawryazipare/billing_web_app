@@ -25,7 +25,7 @@ class AdminValidationController extends Controller
     
     public function validateMobile($id) {
         $id = trim($id);
-        if (\App\Admin::where('reg_mobileno', $id)->exists()) {
+        if (\App\Admin::where('reg_mobileno', $id)->where('is_active',0)->exists()) {
             echo "Mobile No Already exists!";
         }
     }

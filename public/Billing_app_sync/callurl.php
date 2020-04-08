@@ -13,7 +13,7 @@
 			die("ERROR: Could not connect. " . mysqli_connect_error());
 		}
 		
-		$sql = "UPDATE bil_employees SET token='".$token."' WHERE mobile_no='".$mobileno."' AND android_password='".$password."'";
+		$sql = "UPDATE bil_employees SET token='".$token."', login_active=1 WHERE mobile_no='".$mobileno."' AND android_password='".$password."'";
 
 		if ($conn->query($sql) === TRUE) {
 			echo "Record updated successfully";

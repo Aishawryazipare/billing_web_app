@@ -11,6 +11,6 @@ class Item extends Model
     public $timestamps=false;
     protected $fillable = [
        'item_date', 'item_name','item_rate','item_dis','item_disrate','item_tax','item_taxvalue','item_final_rate','item_category','item_units','item_stock','item_barcode','item_hsncode','is_active',
-        'cid','lid','emp_id','sync_flag'
+        'cid','lid','emp_id','sync_flag','item_code'
     ];
 }

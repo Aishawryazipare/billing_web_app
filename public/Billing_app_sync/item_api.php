@@ -42,6 +42,7 @@ if ($result=mysqli_query($con,$sql))
 		$flag['emp_id']=$obj->emp_id;
 		$flag['sub_emp_id']=$obj->sub_emp_id;
 		$flag['sync_flag']=$obj->sync_flag;
+		$flag['item_code']=$obj->item_code;
 		array_push($new_arr,$flag);
     }
   // Free result set

@@ -13,7 +13,7 @@ namespace App;
         protected $guard = 'employee';
 
         protected $fillable = [
-            'name','employee_code', 'email', 'password','role','mobile_no','address','is_active','cid','lid','sub_emp_id','android_password'
+            'name','employee_code', 'email', 'password','role','mobile_no','address','is_active','login_active','cid','lid','sub_emp_id','android_password'
         ];
 
         protected $hidden = [

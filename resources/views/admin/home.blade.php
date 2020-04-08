@@ -170,7 +170,7 @@ $a=0;
                   <tr>
                     <th>Sr No.</th>
                     <th>Item Name</th>
-                    <th>Location/th>
+                    <th>Location</th>
                   </tr>
                   </thead>
                   <tbody>

@@ -11,6 +11,6 @@ class HeaderFooter extends Model
     public $timestamps=false;
     protected $fillable = [
         'cid','lid','emp_id','h1','h2','h3','h4','h5','f1','f2','f3','f4','f5','is_active',
-        'page_size','sync_flag','gst_setting','multiple_print','reset_bill','bill_printing'
+        'page_size','sync_flag','gst_setting','multiple_print','reset_bill','bill_printing','point_of_contact','payment_method'
     ];
 }

@@ -23,8 +23,8 @@
   <section class="content">
    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">SUPPLIER LIST</h3><a href="{{url('add_supplier')}}" class="panel-title" style="margin-left: 73%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Supplier</a>
-            </div>
+		<h3 class="box-title">&nbsp;&nbsp;</h3><a href="{{url('add_supplier')}}" class="panel-title" style="margin-left: 85%;color: #dc3d59;"><span class="fa fa-plus-square"></span> Add New Supplier</a>
+             </div>
             <!-- /.box-header -->
              <?php $x = 1; ?>
             <div class="box-body" style="overflow-x:auto;">
@@ -74,9 +74,9 @@ $(document).ready(function(){
     $(".delete").on("click", function () {
         var id = this.id;
 //        alert(id);
-        swal({
-            title: "Please Conform",
-            text: "You want to Delete Supplier?",
+           swal({
+            title: "Please Confirm",
+            text: "You want to Delete Supplier ?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#e74c3c",
@@ -86,16 +86,20 @@ $(document).ready(function(){
             closeOnCancel: false,
         }, function (isConfirm) {
             if (isConfirm) {
-                 $.ajax({
-                   url: 'delete-supplier/' + id,
+                $.ajax({
+                    url: 'delete-supplier/' + id,
                     type: 'get',
                     success: function (response) {
-                         location.reload();
+                        swal({ type: "success", title: "Done!", confirmButtonColor: "#292929", text: "Supplier Deleted Successfully", confirmButtonText: "Ok" }, 
+                                function() {
+                                    location.reload();
+                                });
                     }
                 });
-            } else {
+            }else {
 //                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
-                swal("Cancelled", "", "error");
+                // swal("Cancelled", "", "error");
+                location.reload();
             }
         });
     })

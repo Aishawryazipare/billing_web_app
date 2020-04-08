@@ -2,14 +2,14 @@
     $client_data=\App\Admin::select('reg_personname')->where(['rid'=>$cid])->first();
     ?>
 <table border="1">
-    <tr><td colspan="11"><h3>Bill Report</h3></td><td style="text-align:center;"></td></tr>
+    <tr><td colspan="13"><h3>Bill Report</h3></td><td style="text-align:center;"></td></tr>
     <tr>
         <th>Client<br/>Name:</th>
-        <td colspan="11">{{$client_data->reg_personname}}</td>
+        <td colspan="13">{{$client_data->reg_personname}}</td>
     </tr>
     <tr>
         <th>Date:</th>
-        <td colspan="11">{{$from_date}} To {{$to_date}}</td>
+        <td colspan="13">{{$from_date}} To {{$to_date}}</td>
         <!--<th colspan="5" style="text-align:right;">To Date:{{$to_date}}</th>-->
     </tr>
         <tr> 
@@ -17,15 +17,16 @@
             <th style="text-align:center;">Date</th>
             <th style="text-align:center;">Bill No</th>
 	    <th style="text-align:center;">Order No</th>
-			<th style="text-align:center;">Customer Name</th>
+            <th style="text-align:center;">Customer Name</th>
+            <th style="text-align:center;">Bill Amount</th>
             <th style="text-align:center;">Item</th>
-            <th style="text-align:center;">Basic Amount</th>
+            <th style="text-align:center;">Rate</th>
             <th style="text-align:center;">Qty</th>
             <th style="text-align:center;">Disc%</th>
             <th style="text-align:center;">Disc Amt</th>
             <th style="text-align:center;">Tax%</th>
             <th style="text-align:center;">Tax Amount</th>
-            <th style="text-align:center;">Bill Amount</th>
+            <th style="text-align:center;">Amount</th>
         </tr>
               <?php
               $j=1; $i=1;
@@ -61,6 +62,7 @@
             <td rowspan="{{$count}}" style="text-align:center;vertical-align:middle;">{{$data->bill_code}}</td>
 	    <td rowspan="{{$count}}" style="text-align:center;vertical-align:middle;">{{$data->bill_no}}</td>
 			 <td rowspan="{{$count}}" style="text-align:center;vertcal-align:middle;">{{$customer_name}}</td>
+			 <td rowspan="{{$count}}" style="text-align:center;vertcal-align:middle;">{{$data->bill_totalamt}}</td>
             <?php 
              foreach ($dros_out as $dross)
              {
@@ -79,7 +81,7 @@
             <td style="text-align:center;">{{$item_data->item_disrate}}</td>
             <td style="text-align:center;">{{$dross->bill_tax}}</td>
             <td style="text-align:center;">{{$item_data->item_taxvalue}}</td>
-            <td style="text-align:center;">{{$data->bill_totalamt}}</td>
+            <td style="text-align:center;">{{$dross->item_totalrate}}</td>
         </tr>
                   <?php }
  else {
@@ -92,7 +94,7 @@
             <td style="text-align:center;">{{$item_data->item_disrate}}</td>
             <td style="text-align:center;">{{$dross->bill_tax}}</td>
             <td style="text-align:center;">{{$item_data->item_taxvalue}}</td>
-            <td style="text-align:center;">{{$data->bill_totalamt}}</td>    
+            <td style="text-align:center;">{{$dross->item_totalrate}}</td>    
         </tr>
     <?php
  }$j++;
@@ -110,7 +112,7 @@
             <td style="text-align:center;">{{$total_dis_rate}}</td>
             <td style="text-align:center;"></td>
             <td style="text-align:center;">{{$total_tax_amt}}</td>
-            <td></td>
+            <td></td><td></td>
         </tr>
                     <?php
                      $total_sales=$total_sales+$data->bill_totalamt;
@@ -122,7 +124,7 @@
             <td style="text-align:center;"><b>Total Sales</b></td>
             <td style="text-align:center;">{{$total_sales}}</td>
             <td></td><td></td><td></td><td></td>
-            <td></td><td></td><td></td><td></td>
+            <td></td><td></td><td></td><td></td><td></td><td></td>
         </tr>
         <tr>
             <td></td>
@@ -130,7 +132,7 @@
             <td style="text-align:center;"><b>Total Bills</b></td>
             <td style="text-align:center;">{{$i}}</td>
              <td></td><td></td><td></td><td></td><td></td>
-            <td></td><td></td><td></td><td></td>
+            <td></td><td></td><td></td><td></td><td></td>
         </tr>
        
         
@@ -171,4 +173,5 @@ else {
 <?php
 }
 ?>
+
 

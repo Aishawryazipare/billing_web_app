@@ -104,9 +104,9 @@ $(document).ready(function(){
     $(".payment_delete").on("click", function () {
         var id = this.id;
 //        alert(id);
-        swal({
-            title: "Please Conform",
-            text: "Are you sure to Payment Type?",
+         swal({
+            title: "Please Confirm",
+            text: "You want to Delete Payment Type?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#e74c3c",
@@ -116,16 +116,20 @@ $(document).ready(function(){
             closeOnCancel: false,
         }, function (isConfirm) {
             if (isConfirm) {
-                 $.ajax({
-                   url: 'delete-payment/' + id,
+                $.ajax({
+                    url: 'delete-payment/' + id,
                     type: 'get',
                     success: function (response) {
-                         location.reload();
+                        swal({ type: "success", title: "Done!", confirmButtonColor: "#292929", text: "Payment Type Deleted Successfully", confirmButtonText: "Ok" }, 
+                                function() {
+                                    location.reload();
+                                });
                     }
                 });
-            } else {
+            }else {
 //                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
-                swal("Cancelled", "", "error");
+                // swal("Cancelled", "", "error");
+                location.reload();
             }
         });
     })
@@ -133,8 +137,8 @@ $(document).ready(function(){
         var id = this.id;
 //        alert(id);
         swal({
-            title: "Please Conform",
-            text: "Are you sure to Delete POS?",
+            title: "Please Confirm",
+            text: "You want to Delete POS?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#e74c3c",
@@ -144,16 +148,20 @@ $(document).ready(function(){
             closeOnCancel: false,
         }, function (isConfirm) {
             if (isConfirm) {
-                 $.ajax({
-                   url: 'delete-contact/' + id,
+                $.ajax({
+                    url: 'delete-contact/' + id,
                     type: 'get',
                     success: function (response) {
-                         location.reload();
+                        swal({ type: "success", title: "Done!", confirmButtonColor: "#292929", text: "POS Deleted Successfully", confirmButtonText: "Ok" }, 
+                                function() {
+                                    location.reload();
+                                });
                     }
                 });
-            } else {
+            }else {
 //                        $("#Modal2").modal({backdrop: 'static', keyboard: false});
-                swal("Cancelled", "", "error");
+                // swal("Cancelled", "", "error");
+                location.reload();
             }
         });
     })

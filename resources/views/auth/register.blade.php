@@ -86,8 +86,8 @@ if(Auth::guard('employee')->check()){
                         <div class="form-group">
                             <label for="company" class="col-sm-4 control-label">Address</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="address" placeholder="Address" value="" name="address" style='resize: vertical; max-width: 600px; min-width: 200px;' required >
-                            </div>
+                        <textarea class="form-control" rows="3" placeholder="Enter Address..." name="address" style='resize: vertical; max-width: 600px; min-width: 200px;'></textarea>       
+			</div>
                         </div>
                         <?php if($location == "multiple") { 
                                         if(Auth::guard('admin')->check()){ ?>
